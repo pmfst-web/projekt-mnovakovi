@@ -42,10 +42,3 @@ Jednostavna društvena mreža: Da bi se pristupilo aplikaciji, postojeći korisn
 4. "Lajkanje" objava (poništavanje)
 5. Filtriranje objava (samo vlastite/ svi korisnici)
 
-# Evidencija aktivnosti
-
-## 06.03.2023.
-Pocetak | Kraj
-------- | ----
-14:45   | xx:xx
-### Kratki opis promjena
