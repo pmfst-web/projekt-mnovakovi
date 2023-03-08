@@ -9,14 +9,14 @@ const NovaObjavaForma = (props) =>{
 
     const novaObjava = (e) =>{
         e.preventDefault()
-        const nova = {
+        const novaObjava = {
             id: props.objave.length+1,
             sadrzaj: unosSadrzaja,
             datum: '2019-05-30T17:30:31.098Z',
             likeovi: [],
             komentari: []
         }
-        props.postaviObjave(props.objave.concat(nova))
+        props.postaviObjave(props.objave.concat(novaObjava))
         postaviUnos('')
     }
 
