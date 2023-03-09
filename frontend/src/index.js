@@ -47,5 +47,5 @@ const komentari = [
   }
 ]
 
-ReactDOM.render(<App objave={objave} komentari={komentari}/>,document.getElementById('root'))
+ReactDOM.render(<App/>,document.getElementById('root'))
 

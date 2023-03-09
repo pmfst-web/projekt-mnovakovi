@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import axios from 'axios'
 
 const NovaObjavaForma = (props) =>{
     const [unosSadrzaja, postaviUnos] = useState('')
@@ -10,14 +11,15 @@ const NovaObjavaForma = (props) =>{
     const novaObjava = (e) =>{
         e.preventDefault()
         const novaObjava = {
-            id: props.objave.length+1,
             sadrzaj: unosSadrzaja,
-            datum: '2019-05-30T17:30:31.098Z',
-            likeovi: [],
             komentari: []
         }
-        props.postaviObjave(props.objave.concat(novaObjava))
-        postaviUnos('')
+        axios.post('http://localhost:3001/api/objave', novaObjava)
+        .then(res => {
+            props.postaviObjave(props.objave.concat(res.data))
+            postaviUnos('')
+        })
+        
     }
 
 

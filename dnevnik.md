@@ -15,3 +15,11 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Nastavak rada na frontendu: definirana komponenta Novi komentar.
 Mogućnost uređivanja sadržaja objava i komentiranja.
+
+## 09.03.2023.
+Pocetak | Kraj
+------- | ----
+16:00   | 19:10
+### Kratki opis promjena
+Početak rada na backendu: stvoren express server, definirane osnovne rute (get, post, put, delete) za objave i komentate.
+Povezivanje frontenda s backendom, modifikacija postojećih komponenti (lokalni podaci).

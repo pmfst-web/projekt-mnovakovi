@@ -1,12 +1,24 @@
 import React, {useEffect, useState} from 'react'
 import Objava from './components/Objava'
 import NovaObjavaForma from './components/NovaObjavaForma'
-// import axios from 'axios'
+import axios from 'axios'
 
 const App = (props) => {
 
-    const [objave, postaviObjave] = useState(props.objave)
-    const [komentari, postaviKomentare] = useState(props.komentari)
+    const [objave, postaviObjave] = useState([])
+    const [komentari, postaviKomentare] = useState([])
+
+    useEffect(()=>{
+        console.log('Dohvaćanje objava')
+        axios.get('http://localhost:3001/api/objave')
+        .then(res => postaviObjave(res.data))
+    },[])
+
+    useEffect(()=>{
+        console.log('Dohvaćanje komentara')
+        axios.get('http://localhost:3001/api/komentari')
+        .then(res => postaviKomentare(res.data))
+    },[])
 
 
     return(
