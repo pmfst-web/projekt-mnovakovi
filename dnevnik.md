@@ -21,11 +21,14 @@ Pocetak | Kraj
 ------- | ----
 16:00   | 19:10
 ### Kratki opis promjena
-Početak rada na backendu: stvoren express server, definirane osnovne rute (get, post, put, delete) za objave i komentate.
+Početak rada na backendu: stvoren express server, definirane osnovne rute (get, post, put, delete) za objave i komentare.
 Povezivanje frontenda s backendom, modifikacija postojećih komponenti (lokalni podaci).
 
 ## 15.03.2023.
 Pocetak | Kraj
 ------- | ----
-13:30   | xx:xx
+13:30   | 17:10
 ### Kratki opis promjena
+Povezivanje s mongoDB: definirane osnovne rute (get, post, put, delete) za objave i komentare.
+Middleware za nepoznate rute i druge greške.
+Restrukturiranje zahtjeva na frontendu: services folder. 

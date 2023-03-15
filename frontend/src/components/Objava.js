@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Komentar from './Komentar'
 import axios from 'axios'
+import objaveAkcije from './services/objave'
+import komentariAkcije from './services/komentari'
 
 const UrediObjavu = (props) => {
 
@@ -30,14 +32,16 @@ const NoviKomentar = (props) => {
             sadrzaj: komentarNoviSadrzaj,
             ID_objava: props.objava.id
         }
-        axios.post('http://localhost:3001/api/komentari', komentarNovi)
+        komentariAkcije.stvori(komentarNovi)
+        // axios.post('http://localhost:3001/api/komentari', komentarNovi)
         .then(res => {
             props.postaviKomentare(props.komentari.concat(res.data))
             const modObjava ={
                 ...props.objava,
                 komentari: props.objava.komentari.concat(res.data.id)
             }
-            axios.put(`http://localhost:3001/api/objave/${res.data.ID_objava}`, modObjava)
+            objaveAkcije.osvjezi(res.data.ID_objava, modObjava)
+            // axios.put(`http://localhost:3001/api/objave/${res.data.ID_objava}`, modObjava)
             .then(res => {
                 console.log(res)
                 props.postaviObjave(props.objave.map(o => o.id !== res.data.id ? o : modObjava))
@@ -80,13 +84,15 @@ const Objava = (props) => {
     const obrisiObjavu = () =>{
         if(props.objava.komentari.length!==0){
             for(let k_ID of props.objava.komentari){
-                const url_komentar = `http://localhost:3001/api/komentari/${k_ID}`
-                axios.delete(url_komentar)
+                komentariAkcije.brisi(k_ID)
+                // const url_komentar = `http://localhost:3001/api/komentari/${k_ID}`
+                // axios.delete(url_komentar)
             }
 
         }
-        const url_objava = `http://localhost:3001/api/objave/${props.objava.id}`
-        axios.delete(url_objava)
+        objaveAkcije.brisi(props.objava.id)
+        // const url_objava = `http://localhost:3001/api/objave/${props.objava.id}`
+        // axios.delete(url_objava)
         .then(res => {
             props.postaviKomentare(props.komentari.filter(k => k.ID_objava !== props.objava.id))
             props.postaviObjave(props.objave.filter(o => o.id !== props.objava.id))
@@ -114,7 +120,8 @@ const Objava = (props) => {
             ...props.objava,
             sadrzaj: sadrzajNovi
         }
-        axios.put(`http://localhost:3001/api/objave/${props.objava.id}`, modObjava)
+        objaveAkcije.osvjezi(props.objava.id, modObjava)
+        // axios.put(`http://localhost:3001/api/objave/${props.objava.id}`, modObjava)
         .then(res =>{
             props.postaviObjave(props.objave.map(o => o.id !== props.objava.id ? o : res.data))
             promijeniUredjivanje()
