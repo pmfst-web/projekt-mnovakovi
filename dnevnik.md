@@ -23,3 +23,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Početak rada na backendu: stvoren express server, definirane osnovne rute (get, post, put, delete) za objave i komentate.
 Povezivanje frontenda s backendom, modifikacija postojećih komponenti (lokalni podaci).
+
+## 15.03.2023.
+Pocetak | Kraj
+------- | ----
+13:30   | xx:xx
+### Kratki opis promjena
