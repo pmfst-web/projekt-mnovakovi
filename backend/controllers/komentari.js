@@ -1,8 +1,10 @@
 const komentariRouter = require('express').Router()
 const Komentar = require('../models/komentar')
+const Korisnik = require('../models/korisnik')
 
 komentariRouter.get('/', async (req, res) => {
     const rezultat = await Komentar.find({})
+    .populate('korisnik', { username: 1, ime: 1 })
     res.json(rezultat)
 })
 
@@ -21,7 +23,7 @@ komentariRouter.delete('/:id', async (req, res) => {
     res.status(204).end()
 })
 
-komentariRouter.put('/:id', (req, res) => {
+komentariRouter.put('/:id', async (req, res) => {
     const podatak = req.body
     const id = req.params.id
   
@@ -31,24 +33,26 @@ komentariRouter.put('/:id', (req, res) => {
         ID_objava: podatak.ID_objava
     }
   
-    Komentar.findByIdAndUpdate(id, komentar, {new: true})
-    .then( noviKomentar => {
-        res.json(noviKomentar)
-    })
-    .catch(err => next(err))
+    const noviKomentar = await Komentar.findByIdAndUpdate(id, komentar, {new: true})
+    res.json(noviKomentar)
   
 })
 
 komentariRouter.post('/', async (req, res, next) => {
     const podatak = req.body
+    const korisnik = await Korisnik.findById(podatak.korisnikId)
+
   
     const komentar = new Komentar({
         sadrzaj: podatak.sadrzaj,
         datum: new Date().toISOString(),
-        ID_objava: podatak.ID_objava
+        ID_objava: podatak.ID_objava,
+        korisnik: korisnik._id
     })
     const spremljeniKomentar = await komentar.save()
-        res.json(spremljeniKomentar)
+    await korisnik.save()
+    korisnik.komentari = korisnik.komentari.concat(spremljeniKomentar._id)
+    res.json(spremljeniKomentar)
     
 })
 

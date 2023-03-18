@@ -14,6 +14,10 @@ const komentarSchema = new mongoose.Schema({
     ID_objava: {
         type: String,
         required: true
+    },
+    korisnik: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Korisnik'
     }
   })
 
@@ -26,4 +30,6 @@ const komentarSchema = new mongoose.Schema({
     }
   })
 
-module.exports = mongoose.model('Komentar', komentarSchema, 'komentari')
+const Komentar = mongoose.model('Komentar', komentarSchema, 'komentari')
+
+module.exports = Komentar

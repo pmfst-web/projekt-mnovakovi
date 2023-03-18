@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/objave
+content-type: application/json
+
+{
+  "sadrzaj": "testObjava2",
+  "korisnikId": "6415cf5ec9e047c39f09b35c"
+}

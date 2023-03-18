@@ -1,8 +1,10 @@
 const objaveRouter = require('express').Router()
 const Objava = require('../models/objava')
+const Korisnik = require('../models/korisnik')
 
 objaveRouter.get('/', async (req, res) => {
     const rezultat = await Objava.find({})
+    .populate('korisnik', {_id: 1})
     res.json(rezultat)
 })
 
@@ -21,7 +23,7 @@ objaveRouter.delete('/:id', async (req, res) => {
     res.status(204).end()
 })
 
-objaveRouter.put('/:id', (req, res) => {
+objaveRouter.put('/:id', async (req, res) => {
     const podatak = req.body
     const id = req.params.id
   
@@ -32,23 +34,24 @@ objaveRouter.put('/:id', (req, res) => {
         komentari: podatak.komentari
     }
   
-    Objava.findByIdAndUpdate(id, objava, {new: true})
-    .then( novaObjava => {
-        res.json(novaObjava)
-    })
-    .catch(err => next(err))
+    const novaObjava = await Objava.findByIdAndUpdate(id, objava, {new: true})
+    res.json(novaObjava)
   
 })
 
 objaveRouter.post('/', async (req, res, next) => {
     const podatak = req.body
+    const korisnik = await Korisnik.findById(podatak.korisnikId)
   
     const objava = new Objava({
         sadrzaj: podatak.sadrzaj,
-        datum: new Date().toISOString()
+        datum: new Date().toISOString(),
+        korisnik: podatak.korisnikId
     })
     const spremljenaObjava = await objava.save()
-        res.json(spremljenaObjava)
+    korisnik.objave = korisnik.objave.concat(spremljenaObjava._id)
+    await korisnik.save()
+    res.json(spremljenaObjava)
     
 })
 

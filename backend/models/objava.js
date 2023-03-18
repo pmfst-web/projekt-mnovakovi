@@ -18,7 +18,11 @@ const objavaSchema = new mongoose.Schema({
     komentari: {
         type: Array,
         default: []
-      }
+    },
+    korisnik: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Korisnik'
+    }
   })
 
   objavaSchema.set('toJSON', {
@@ -30,4 +34,7 @@ const objavaSchema = new mongoose.Schema({
     }
   })
 
-module.exports = mongoose.model('Objava', objavaSchema, 'objave')
+
+const Objava = mongoose.model('Objava', objavaSchema, 'objave')
+
+module.exports = Objava
