@@ -32,3 +32,9 @@ Pocetak | Kraj
 Povezivanje s mongoDB: definirane osnovne rute (get, post, put, delete) za objave i komentare.
 Middleware za nepoznate rute i druge greške.
 Restrukturiranje zahtjeva na frontendu: services folder. 
+
+## 18.03.2023.
+Pocetak | Kraj
+------- | ----
+14:25   | xx:xx
+### Kratki opis promjena
