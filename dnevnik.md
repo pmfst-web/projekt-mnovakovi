@@ -39,3 +39,9 @@ Pocetak | Kraj
 14:25   | 16:55
 ### Kratki opis promjena
 Mogućnost dodavanja korisnika (trenutno samo putem REST API ekstenzije), enripcija lozinki, modifikacija postojećih ruta za objave i komentare (dvostruko referenciranje).
+
+## 19.03.2023.
+Pocetak | Kraj
+------- | ----
+14:30   | xx:xx
+### Kratki opis promjena
