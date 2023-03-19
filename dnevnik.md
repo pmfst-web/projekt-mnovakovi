@@ -43,5 +43,7 @@ Mogućnost dodavanja korisnika (trenutno samo putem REST API ekstenzije), enripc
 ## 19.03.2023.
 Pocetak | Kraj
 ------- | ----
-14:30   | xx:xx
+14:30   | 18:45
 ### Kratki opis promjena
+Autorizacija korisnika: mogućnost prijave, modifikacija ruta (post, put, delete) za objave i komentare (trenutno samo putem REST API ekstenzije).
+Definirana komponenta za prijavu korisnika putem forme - LoginForma.

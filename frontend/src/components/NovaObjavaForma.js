@@ -23,14 +23,21 @@ const NovaObjavaForma = (props) =>{
         
     }
 
-
-    return(
-        <form onSubmit={novaObjava}>
-            <input value={unosSadrzaja} onChange={promjenaSadrzaja}></input>
-            <button type='submit'>Objavi</button>
-
-        </form>
-    )
+    if(props.korisnik){
+        return(
+            <div>
+                <h1>Dodaj objavu</h1>
+                <form onSubmit={novaObjava}>
+                    <input value={unosSadrzaja} onChange={promjenaSadrzaja}></input>
+                    <button type='submit'>Objavi</button>
+                </form>
+            </div>           
+        )
+    }
+    else{
+        return null
+    }
+    
 
 }
 

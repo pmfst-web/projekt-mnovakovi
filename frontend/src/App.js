@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import Objava from './components/Objava'
 import NovaObjavaForma from './components/NovaObjavaForma'
+import LoginForma from './components/LoginForma'
 import axios from 'axios'
 
 const App = (props) => {
 
     const [objave, postaviObjave] = useState([])
     const [komentari, postaviKomentare] = useState([])
+    const [korisnik, postaviKorisnika] = useState(null)
+
+
 
     useEffect(()=>{
         console.log('Dohvaćanje objava')
@@ -23,12 +27,12 @@ const App = (props) => {
 
     return(
         <div>
-            <h1>Dodaj objavu</h1>
-            <NovaObjavaForma objave={objave} postaviObjave={postaviObjave}/>
+            <LoginForma korisnik={korisnik} postaviKorisnika={postaviKorisnika}/>
+            <NovaObjavaForma objave={objave} postaviObjave={postaviObjave} korisnik={korisnik}/>
             <h1>Objave</h1>
             <ul>
                 {
-                    objave.map( o => <Objava objava={o} key={o.id} objave={objave} postaviObjave={postaviObjave} komentari={komentari} postaviKomentare={postaviKomentare}/>)
+                    objave.map( o => <Objava objava={o} key={o.id} objave={objave} postaviObjave={postaviObjave} komentari={komentari} postaviKomentare={postaviKomentare} korisnik={korisnik}/>)
                 }
             </ul>
 

@@ -1,6 +1,7 @@
 const objaveRouter = require('express').Router()
 const Objava = require('../models/objava')
 const Korisnik = require('../models/korisnik')
+const autorizacija = require('../utils/autorizacija')
 
 objaveRouter.get('/', async (req, res) => {
     const rezultat = await Objava.find({})
@@ -19,14 +20,31 @@ objaveRouter.get('/:id', async (req, res) => {
 })
 
 objaveRouter.delete('/:id', async (req, res) => {
+    const token = autorizacija.dohvatiToken(req)
+    const dekodiraniToken = autorizacija.verificirajToken(token)
+    if(!token || !dekodiraniToken.id){
+        return res.status(401).json({error: 'Neispravan token'})
+        //ako nisi autentificiran, nemaš prava
+    }
+    const korisnikId = req.get('korisnikId')
+    const korisnik = await Korisnik.findById(korisnikId)
+    console.log(korisnik)
     await Objava.findByIdAndRemove(req.params.id)
+    korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
+    await korisnik.save()
     res.status(204).end()
 })
 
 objaveRouter.put('/:id', async (req, res) => {
+    const token = autorizacija.dohvatiToken(req)
+    const dekodiraniToken = autorizacija.verificirajToken(token)
+    if(!token || !dekodiraniToken.id){
+        return res.status(401).json({error: 'Neispravan token'})
+        //ako nisi autentificiran, nemaš prava
+    }
     const podatak = req.body
     const id = req.params.id
-  
+    
     const objava = {
         sadrzaj: podatak.sadrzaj,
         datum: podatak.datum,
@@ -41,6 +59,12 @@ objaveRouter.put('/:id', async (req, res) => {
 
 objaveRouter.post('/', async (req, res, next) => {
     const podatak = req.body
+    const token = autorizacija.dohvatiToken(req)
+    const dekodiraniToken = autorizacija.verificirajToken(token)
+    if(!token || !dekodiraniToken.id){
+        return res.status(401).json({error: 'Neispravan token'})
+        //ako nisi autentificiran, nemaš prava
+    }
     const korisnik = await Korisnik.findById(podatak.korisnikId)
   
     const objava = new Objava({

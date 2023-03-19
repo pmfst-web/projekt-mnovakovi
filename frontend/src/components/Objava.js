@@ -79,6 +79,7 @@ const Objava = (props) => {
     const [uredjivanje, postaviUredjivanje] = useState(false)
     const [komentiranje, postaviKomentiranje] = useState(false)
 
+    // const pripadaKorisniku = props.korisnik ? props.korisnik.id === props.objava.korisnik.id : false
     const komentariOdObjave = props.komentari.filter( k => k.ID_objava === props.objava.id)
 
     const obrisiObjavu = () =>{
@@ -141,13 +142,13 @@ const Objava = (props) => {
     return(
         <div>
             <input value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></input>
-            <button onClick={promijeniUredjivanje} hidden={uredjivanje}>Uredi</button>
-            <button onClick={obrisiObjavu} hidden={uredjivanje}>Obriši</button>
+            <button onClick={promijeniUredjivanje}>Uredi</button>
+            <button onClick={obrisiObjavu}>Obriši</button>
             <UrediObjavu uredjivanje={uredjivanje} ponistiUredjivanje={ponistiUredjivanje} osvjeziSadrzaj={osvjeziSadrzaj} />
 
             <div>
-                <button onClick={props.lajkajObjavu}>Like</button>
-                <button onClick={promijeniKomentiranje}>Komentiraj</button>                
+                <button onClick={props.lajkajObjavu} hidden={!props.korisnik}>Like</button>
+                <button onClick={promijeniKomentiranje} hidden={!props.korisnik}>Komentiraj</button>                
             </div>
             <NoviKomentar komentiranje={komentiranje} postaviKomentiranje={postaviKomentiranje} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objava={props.objava} objave={props.objave} postaviObjave={props.postaviObjave}/>
             <ul>
