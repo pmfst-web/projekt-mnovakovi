@@ -1,8 +1,0 @@
-POST http://localhost:3001/api/komentari
-content-type: application/json
-
-{
-  "sadrzaj": "testKomentar1",
-  "ID_objava": "6415d5115f8239adead703d4",
-  "korisnikId": "6415cf5ec9e047c39f09b35c"
-}

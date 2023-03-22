@@ -51,5 +51,6 @@ Definirana komponenta za prijavu korisnika putem forme - LoginForma.
 ## 22.03.2023.
 Pocetak | Kraj
 ------- | ----
-13:25   | xx:xx
+13:25   | 17:55
 ### Kratki opis promjena
+Ideja: Brisanje dokumenata iz kolekcije u bazi ažurira dokumente u drugim kolekcijama po principu dvostrukog referenciranja (npr. ako se u bazu umetne nova objava s pripadajućim ID-jem korisnika, odgovarajuće polje korisnika se ažurira da se u njemu nalazi ID nove objave, isto vrijedi i za brisanje objave - uklanjanje ID-a iz polja korisnika, brisanje svih pripadajućih komentara te objave). Radi kod brisanja i dodavanja objava, ali izbacuje grešku kod brisanja i dodavanja komentara.

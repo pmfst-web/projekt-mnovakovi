@@ -5,7 +5,8 @@ const autorizacija = require('../utils/autorizacija')
 
 komentariRouter.get('/', async (req, res) => {
     const rezultat = await Komentar.find({})
-    .populate('korisnik', { username: 1, ime: 1 })
+    .populate('korisnik', {_id: 1})
+    .populate('objava', {_id: 1})
     res.json(rezultat)
 })
 
@@ -24,13 +25,12 @@ komentariRouter.delete('/:id', async (req, res) => {
     const dekodiraniToken = autorizacija.verificirajToken(token)
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
-        //ako nisi autentificiran, nemaš prava
     }
-    const korisnikId = req.get('korisnikId')
-    const korisnik = await Korisnik.findById(korisnikId)
+    // const korisnikId = req.get('korisnikId')
+    // const korisnik = await Korisnik.findById(korisnikId)
     await Komentar.findByIdAndRemove(req.params.id)
-    korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
-    await korisnik.save()
+    // korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
+    // await korisnik.save()
     res.status(204).end()
 })
 
@@ -39,7 +39,6 @@ komentariRouter.put('/:id', async (req, res) => {
     const dekodiraniToken = autorizacija.verificirajToken(token)
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
-        //ako nisi autentificiran, nemaš prava
     }
     const podatak = req.body
     const id = req.params.id
@@ -47,7 +46,7 @@ komentariRouter.put('/:id', async (req, res) => {
     const komentar = {
         sadrzaj: podatak.sadrzaj,
         datum: podatak.datum,
-        ID_objava: podatak.ID_objava
+        objava: podatak.ID_objava
     }
   
     const noviKomentar = await Komentar.findByIdAndUpdate(id, komentar, {new: true})
@@ -61,20 +60,19 @@ komentariRouter.post('/', async (req, res, next) => {
     const dekodiraniToken = autorizacija.verificirajToken(token)
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
-        //ako nisi autentificiran, nemaš prava
     }
-    const korisnik = await Korisnik.findById(podatak.korisnikId)
+    // const korisnik = await Korisnik.findById(podatak.korisnikId)
 
   
     const komentar = new Komentar({
         sadrzaj: podatak.sadrzaj,
         datum: new Date().toISOString(),
-        ID_objava: podatak.ID_objava,
+        objava: podatak.objava,
         korisnik: podatak.korisnikId
     })
     const spremljeniKomentar = await komentar.save()
-    await korisnik.save()
-    korisnik.komentari = korisnik.komentari.concat(spremljeniKomentar._id)
+    // await korisnik.save()
+    // korisnik.komentari = korisnik.komentari.concat(spremljeniKomentar._id)
     res.json(spremljeniKomentar)
     
 })

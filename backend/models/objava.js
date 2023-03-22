@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Komentar = require('./komentar')
+const Korisnik = require('./korisnik')
 
 const objavaSchema = new mongoose.Schema({
     sadrzaj: {
@@ -15,10 +17,12 @@ const objavaSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    komentari: {
-        type: Array,
-        default: []
-    },
+    komentari: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Komentar'
+        }
+    ],
     korisnik: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Korisnik'
@@ -32,6 +36,21 @@ const objavaSchema = new mongoose.Schema({
         delete ret.__v
         return ret
     }
+  })
+
+  //KASKADIRANJE?
+
+  //prema službenoj dokumentaciji findByIdAndRemove() funkcija okida findOneAndRemove() middleware
+  objavaSchema.post('findOneAndRemove', async function(){
+    await Komentar.deleteMany({objava: this._id}).exec()
+    await Korisnik.findByIdAndUpdate(this.korisnik, {$pull: {"objave": {_id: this._id}}}).exec()
+    
+  })
+
+  //prema službenoj dokumentaciji save() funkcija okida validate() hook
+  objavaSchema.post('validate', async function(){
+    await Korisnik.findByIdAndUpdate(this.korisnik._id, {$push: {"objave": {_id: this._id}}}).exec()
+    
   })
 
 

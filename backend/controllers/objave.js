@@ -6,6 +6,7 @@ const autorizacija = require('../utils/autorizacija')
 objaveRouter.get('/', async (req, res) => {
     const rezultat = await Objava.find({})
     .populate('korisnik', {_id: 1})
+    .populate('komentari', {_id: 1})
     res.json(rezultat)
 })
 
@@ -24,14 +25,13 @@ objaveRouter.delete('/:id', async (req, res) => {
     const dekodiraniToken = autorizacija.verificirajToken(token)
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
-        //ako nisi autentificiran, nemaš prava
     }
-    const korisnikId = req.get('korisnikId')
-    const korisnik = await Korisnik.findById(korisnikId)
-    console.log(korisnik)
+    // const korisnikId = req.get('korisnikId')
+    // const korisnik = await Korisnik.findById(korisnikId)
+    // console.log(korisnik)
     await Objava.findByIdAndRemove(req.params.id)
-    korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
-    await korisnik.save()
+    // korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
+    // await korisnik.save()
     res.status(204).end()
 })
 
@@ -40,7 +40,6 @@ objaveRouter.put('/:id', async (req, res) => {
     const dekodiraniToken = autorizacija.verificirajToken(token)
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
-        //ako nisi autentificiran, nemaš prava
     }
     const podatak = req.body
     const id = req.params.id
@@ -63,9 +62,8 @@ objaveRouter.post('/', async (req, res, next) => {
     const dekodiraniToken = autorizacija.verificirajToken(token)
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
-        //ako nisi autentificiran, nemaš prava
     }
-    const korisnik = await Korisnik.findById(podatak.korisnikId)
+    // const korisnik = await Korisnik.findById(podatak.korisnikId)
   
     const objava = new Objava({
         sadrzaj: podatak.sadrzaj,
@@ -73,8 +71,8 @@ objaveRouter.post('/', async (req, res, next) => {
         korisnik: podatak.korisnikId
     })
     const spremljenaObjava = await objava.save()
-    korisnik.objave = korisnik.objave.concat(spremljenaObjava._id)
-    await korisnik.save()
+    // korisnik.objave = korisnik.objave.concat(spremljenaObjava._id)
+    // await korisnik.save()
     res.json(spremljenaObjava)
     
 })

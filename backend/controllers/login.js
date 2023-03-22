@@ -5,7 +5,7 @@ const Korisnik = require('../models/korisnik')
 
 loginRouter.post('/', async(req, res)=>{
 
-    const podaci = req.body //username i password
+    const podaci = req.body
     const korisnik = await Korisnik.findOne({username: podaci.username})
 
     const passDobar = korisnik === null
@@ -15,9 +15,8 @@ loginRouter.post('/', async(req, res)=>{
     if(!(korisnik && passDobar)){
         res.status(401).json(
             {error: 'Neispravna lozinka ili username'})
-    } //korisnik se nije uspio prijaviti
+    } 
 
-    //sve OK
     const userToken = {
         username : korisnik.username,
         id : korisnik._id

@@ -1,0 +1,2 @@
+DELETE http://localhost:3001/api/objave/641b1a04b2cd826985df02a8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2NDFiMTlkNGIyY2Q4MjY5ODVkZjAyYTUiLCJpYXQiOjE2Nzk0OTc2OTF9.yNL9xc4-e2yzH4WxyyKtsyto3-vpDj1nyXAMp2nt3sc
