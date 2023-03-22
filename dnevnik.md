@@ -47,3 +47,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Autorizacija korisnika: mogućnost prijave, modifikacija ruta (post, put, delete) za objave i komentare (trenutno samo putem REST API ekstenzije).
 Definirana komponenta za prijavu korisnika putem forme - LoginForma.
+
+## 22.03.2023.
+Pocetak | Kraj
+------- | ----
+13:25   | xx:xx
+### Kratki opis promjena
