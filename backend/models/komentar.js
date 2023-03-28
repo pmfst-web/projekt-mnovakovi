@@ -32,19 +32,19 @@ const komentarSchema = new mongoose.Schema({
     }
   })
 
-  //KASKADIRANJE?
-  //prema službenoj dokumentaciji findByIdAndRemove() funkcija okida findOneAndRemove() middleware
-  komentarSchema.post('findOneAndRemove', async function(){ 
-    await Objava.findByIdAndUpdate(this.objava, {$pull: {"komentari": {_id: this._id}}}).exec()
-    await Korisnik.findByIdAndUpdate(this.korisnik, {$pull: {"komentari": {_id: this._id}}}).exec()
-  })
+  // //KASKADIRANJE?
+  // //prema službenoj dokumentaciji findByIdAndRemove() funkcija okida findOneAndRemove() middleware
+  // komentarSchema.post('findOneAndRemove', async function(){ 
+  //   await Objava.findByIdAndUpdate(this.objava, {$pull: {"komentari": {_id: this._id}}}).exec()
+  //   await Korisnik.findByIdAndUpdate(this.korisnik, {$pull: {"komentari": {_id: this._id}}}).exec()
+  // })
 
-  //prema službenoj dokumentaciji save() funkcija okida validate() hook
-  komentarSchema.post('validate', async function(){
-    const objava = await Objava.findByIdAndUpdate(this.objava._id, {$push: {"komentari": {_id: this._id}}}).exec()
-    await Korisnik.findByIdAndUpdate(this.korisnik._id, {$push: {"komentari": {_id: this._id}}}).exec()
+  // //prema službenoj dokumentaciji save() funkcija okida validate() hook
+  // komentarSchema.post('validate', async function(){
+  //   await Objava.findByIdAndUpdate(this.objava._id, {$push: {"komentari": {_id: this._id}}}).exec()
+  //   await Korisnik.findByIdAndUpdate(this.korisnik._id, {$push: {"komentari": {_id: this._id}}}).exec()
     
-  })
+  // })
 
 
 const Komentar = mongoose.model('Komentar', komentarSchema, 'komentari')

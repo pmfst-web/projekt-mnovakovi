@@ -1,9 +1,9 @@
 POST http://localhost:3001/api/komentari
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2NDFiMmFhMzJmNThmYTkwNDRiOGNjOTciLCJpYXQiOjE2Nzk1MDI0Nzl9.XIwxxVpFewNEITzzll_3aKkHYV53M7_G1JKyDliPgek
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjY0MjMwODM4NDU5YWUyODg4OThmMzFkNCIsImlhdCI6MTY4MDAxODYxNn0.f8rjBTIuQ-Ly1piLJ02_S_Kx2AflD_tpEJhJcH_2RnM
 
 {
   "sadrzaj": "KOMENTAR",
-  "objava": "641b2acd2f58fa9044b8cc9a",
-  "korisnikId": "641b2aa32f58fa9044b8cc97"
+  "objava": "6423086a459ae288898f31d8",
+  "korisnikId": "64230838459ae288898f31d4"
 }

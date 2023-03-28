@@ -9,7 +9,6 @@ korisniciRouter.get('/', async (req, res) => {
 
 korisniciRouter.post('/', async (req, res) => {
     const sadrzaj = req.body
-
     const runde = 10
     const passHash = await bcrypt.hash(sadrzaj.pass, runde)
 

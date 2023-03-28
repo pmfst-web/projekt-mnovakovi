@@ -22,6 +22,12 @@ const UrediObjavu = (props) => {
 const NoviKomentar = (props) => {
     const [komentarNoviSadrzaj, postaviKomentrNovi] = useState('')
 
+    useEffect(()=>{
+        if(props.korisnik){
+            komentariAkcije.postaviToken(props.korisnik.token)
+        }
+    }, [props.korisnik, props.objave])
+
     const promijeniKomentarNovi = (e) =>{
         postaviKomentrNovi(e.target.value)
     }
@@ -30,22 +36,12 @@ const NoviKomentar = (props) => {
         e.preventDefault()
         const komentarNovi = {
             sadrzaj: komentarNoviSadrzaj,
-            ID_objava: props.objava.id
+            objava: props.objava.id,
+            korisnikId: props.korisnik.id
         }
         komentariAkcije.stvori(komentarNovi)
-        // axios.post('http://localhost:3001/api/komentari', komentarNovi)
         .then(res => {
             props.postaviKomentare(props.komentari.concat(res.data))
-            const modObjava ={
-                ...props.objava,
-                komentari: props.objava.komentari.concat(res.data.id)
-            }
-            objaveAkcije.osvjezi(res.data.ID_objava, modObjava)
-            // axios.put(`http://localhost:3001/api/objave/${res.data.ID_objava}`, modObjava)
-            .then(res => {
-                console.log(res)
-                props.postaviObjave(props.objave.map(o => o.id !== res.data.id ? o : modObjava))
-            })
             ponistiKomentiranje()
         })
         
@@ -78,24 +74,31 @@ const Objava = (props) => {
     const [sadrzajNovi, postaviSadrzajNovi] = useState(props.objava.sadrzaj)
     const [uredjivanje, postaviUredjivanje] = useState(false)
     const [komentiranje, postaviKomentiranje] = useState(false)
+    const [pripada, postaviPripada] = useState(props.korisnik ? true : false)
+
+    useEffect(()=>{
+        if(props.korisnik){
+            objaveAkcije.postaviToken(props.korisnik.token)
+            postaviPripada(props.korisnik.id === props.objava.korisnik.id)   
+            
+        }
+    }, [props.korisnik])
+
+    
+
+    // useEffect(()=>{
+    //     if(props.korisnik){
+    //         postaviPripada(props.korisnik.id === props.objava.korisnik.id)      
+    //     }
+    // }, [])
 
     // const pripadaKorisniku = props.korisnik ? props.korisnik.id === props.objava.korisnik.id : false
-    const komentariOdObjave = props.komentari.filter( k => k.ID_objava === props.objava.id)
+    const komentariOdObjave = props.komentari.filter( k => k.objava === props.objava.id)
 
     const obrisiObjavu = () =>{
-        if(props.objava.komentari.length!==0){
-            for(let k_ID of props.objava.komentari){
-                komentariAkcije.brisi(k_ID)
-                // const url_komentar = `http://localhost:3001/api/komentari/${k_ID}`
-                // axios.delete(url_komentar)
-            }
-
-        }
         objaveAkcije.brisi(props.objava.id)
-        // const url_objava = `http://localhost:3001/api/objave/${props.objava.id}`
-        // axios.delete(url_objava)
         .then(res => {
-            props.postaviKomentare(props.komentari.filter(k => k.ID_objava !== props.objava.id))
+            props.postaviKomentare(props.komentari.filter(k => k.objava !== props.objava.id))
             props.postaviObjave(props.objave.filter(o => o.id !== props.objava.id))
         })
         
@@ -122,13 +125,10 @@ const Objava = (props) => {
             sadrzaj: sadrzajNovi
         }
         objaveAkcije.osvjezi(props.objava.id, modObjava)
-        // axios.put(`http://localhost:3001/api/objave/${props.objava.id}`, modObjava)
         .then(res =>{
             props.postaviObjave(props.objave.map(o => o.id !== props.objava.id ? o : res.data))
             promijeniUredjivanje()
         })
-        
-
     }
 
     const ponistiUredjivanje = () => {
@@ -137,27 +137,23 @@ const Objava = (props) => {
 
     }
 
-
-
     return(
         <div>
             <input value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></input>
-            <button onClick={promijeniUredjivanje}>Uredi</button>
-            <button onClick={obrisiObjavu}>Obriši</button>
+            <button onClick={promijeniUredjivanje} hidden={!pripada}>Uredi</button>
+            <button onClick={obrisiObjavu} hidden={!pripada}>Obriši</button>
             <UrediObjavu uredjivanje={uredjivanje} ponistiUredjivanje={ponistiUredjivanje} osvjeziSadrzaj={osvjeziSadrzaj} />
 
             <div>
                 <button onClick={props.lajkajObjavu} hidden={!props.korisnik}>Like</button>
                 <button onClick={promijeniKomentiranje} hidden={!props.korisnik}>Komentiraj</button>                
             </div>
-            <NoviKomentar komentiranje={komentiranje} postaviKomentiranje={postaviKomentiranje} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objava={props.objava} objave={props.objave} postaviObjave={props.postaviObjave}/>
+            <NoviKomentar komentiranje={komentiranje} postaviKomentiranje={postaviKomentiranje} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objava={props.objava} objave={props.objave} postaviObjave={props.postaviObjave} korisnik={props.korisnik}/>
             <ul>
                 {
-                    komentariOdObjave.map( k => <Komentar komentar={k} key={k.id} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objave={props.objave} postaviObjave={props.postaviObjave} objava={props.objava} />)
+                    komentariOdObjave.map( k => <Komentar komentar={k} key={k.id} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objave={props.objave} postaviObjave={props.postaviObjave} objava={props.objava} korisnik={props.korisnik}/>)
                 }
             </ul>
-            
-
         </div>
     )
 }

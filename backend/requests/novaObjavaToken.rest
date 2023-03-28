@@ -1,8 +1,8 @@
 POST http://localhost:3001/api/objave
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2NDFiMmFhMzJmNThmYTkwNDRiOGNjOTciLCJpYXQiOjE2Nzk1MDIwMDR9.ZQW9EYFM7ZH8mAFykcdvp2yIdX24fnhHGyeDO4BU-Q8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjY0MjMwODM4NDU5YWUyODg4OThmMzFkNCIsImlhdCI6MTY4MDAxODM0Mn0.3lvlOAgAbWu0aBT_Lrj2H20rsBRQ1I8C9OAAz9x-5hA
 
 {
-  "sadrzaj": "Objava",
-  "korisnikId": "641b2aa32f58fa9044b8cc97"
+  "sadrzaj": "ObjavaNova",
+  "korisnikId": "64230838459ae288898f31d4"
 }

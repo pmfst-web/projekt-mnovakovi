@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Objava = require('./objava')
 // const uniqueValidator = require('mongoose-unique-validator')
 
 const korisnikSchema = new mongoose.Schema({

@@ -58,5 +58,7 @@ Ideja: Brisanje dokumenata iz kolekcije u bazi ažurira dokumente u drugim kolek
 ## 28.03.2023.
 Pocetak | Kraj
 ------- | ----
-16:40   | xx:xx
+16:40   | 20:00
 ### Kratki opis promjena
+Ispravljene greške iz prethodnog zapisa. 
+Rad na frontendu: mogućnost prijave korisnika, postavljanja i brisanja objava i komentara, prikaz opcija za brisanje i uređivanje objava ukoliko pripadaju prijavljenom korisniku (problem: gumbovi vidljivi tek nakon ponovne prijave korisnika i/ili ponovnog učitavanja stranice).

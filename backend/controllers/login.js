@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const Korisnik = require('../models/korisnik')
 
-loginRouter.post('/', async(req, res)=>{
+loginRouter.post('/', async(req, res, next)=>{
 
     const podaci = req.body
     const korisnik = await Korisnik.findOne({username: podaci.username})
@@ -30,6 +30,8 @@ loginRouter.post('/', async(req, res)=>{
         objave: korisnik.objave,
         id: korisnik._id
     })
+
+    next()
 
 
 })

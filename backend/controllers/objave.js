@@ -1,6 +1,7 @@
 const objaveRouter = require('express').Router()
 const Objava = require('../models/objava')
 const Korisnik = require('../models/korisnik')
+const Komentar = require('../models/komentar')
 const autorizacija = require('../utils/autorizacija')
 
 objaveRouter.get('/', async (req, res) => {
@@ -26,12 +27,11 @@ objaveRouter.delete('/:id', async (req, res) => {
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
     }
-    // const korisnikId = req.get('korisnikId')
-    // const korisnik = await Korisnik.findById(korisnikId)
-    // console.log(korisnik)
-    await Objava.findByIdAndRemove(req.params.id)
-    // korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
-    // await korisnik.save()
+
+    const obrisanaObjava = await Objava.findByIdAndRemove(req.params.id)
+    await Komentar.deleteMany({objava: obrisanaObjava._id}).exec()
+    await Korisnik.findByIdAndUpdate(obrisanaObjava.korisnik, {$pull: {"objave": {_id: obrisanaObjava._id}}}).exec()
+
     res.status(204).end()
 })
 
@@ -63,16 +63,16 @@ objaveRouter.post('/', async (req, res, next) => {
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
     }
-    // const korisnik = await Korisnik.findById(podatak.korisnikId)
   
     const objava = new Objava({
         sadrzaj: podatak.sadrzaj,
         datum: new Date().toISOString(),
         korisnik: podatak.korisnikId
     })
+
     const spremljenaObjava = await objava.save()
-    // korisnik.objave = korisnik.objave.concat(spremljenaObjava._id)
-    // await korisnik.save()
+    await Korisnik.findByIdAndUpdate(spremljenaObjava.korisnik, {$push: {"objave": {_id: spremljenaObjava._id}}}).exec()
+
     res.json(spremljenaObjava)
     
 })

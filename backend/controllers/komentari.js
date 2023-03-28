@@ -1,6 +1,7 @@
 const komentariRouter = require('express').Router()
 const Komentar = require('../models/komentar')
 const Korisnik = require('../models/korisnik')
+const Objava = require('../models/objava')
 const autorizacija = require('../utils/autorizacija')
 
 komentariRouter.get('/', async (req, res) => {
@@ -26,11 +27,10 @@ komentariRouter.delete('/:id', async (req, res) => {
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
     }
-    // const korisnikId = req.get('korisnikId')
-    // const korisnik = await Korisnik.findById(korisnikId)
-    await Komentar.findByIdAndRemove(req.params.id)
-    // korisnik.objave = korisnik.objave.filter(o => o.id !== req.params.id)
-    // await korisnik.save()
+
+    const obrisaniKomentar = await Komentar.findByIdAndRemove(req.params.id)
+    await Objava.findByIdAndUpdate(obrisaniKomentar.objava, {$pull: {"komentari": {_id: obrisaniKomentar._id}}}).exec()
+    await Komentar.findByIdAndUpdate(obrisaniKomentar.objava, {$pull: {"komentari": {_id: obrisaniKomentar._id}}}).exec()
     res.status(204).end()
 })
 
@@ -51,7 +51,6 @@ komentariRouter.put('/:id', async (req, res) => {
   
     const noviKomentar = await Komentar.findByIdAndUpdate(id, komentar, {new: true})
     res.json(noviKomentar)
-  
 })
 
 komentariRouter.post('/', async (req, res, next) => {
@@ -61,8 +60,6 @@ komentariRouter.post('/', async (req, res, next) => {
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
     }
-    // const korisnik = await Korisnik.findById(podatak.korisnikId)
-
   
     const komentar = new Komentar({
         sadrzaj: podatak.sadrzaj,
@@ -70,11 +67,11 @@ komentariRouter.post('/', async (req, res, next) => {
         objava: podatak.objava,
         korisnik: podatak.korisnikId
     })
+
     const spremljeniKomentar = await komentar.save()
-    // await korisnik.save()
-    // korisnik.komentari = korisnik.komentari.concat(spremljeniKomentar._id)
+    await Objava.findByIdAndUpdate(spremljeniKomentar.objava, {$push: {"komentari": {_id: spremljeniKomentar._id}}}).exec()
+    await Korisnik.findByIdAndUpdate(spremljeniKomentar.korisnik, {$push: {"komentari": {_id: spremljeniKomentar._id}}}).exec()
     res.json(spremljeniKomentar)
-    
 })
 
 module.exports = komentariRouter

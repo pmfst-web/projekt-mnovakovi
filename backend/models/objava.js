@@ -38,20 +38,18 @@ const objavaSchema = new mongoose.Schema({
     }
   })
 
-  //KASKADIRANJE?
+  // //KASKADIRANJE?
 
-  //prema službenoj dokumentaciji findByIdAndRemove() funkcija okida findOneAndRemove() middleware
-  objavaSchema.post('findOneAndRemove', async function(){
-    await Komentar.deleteMany({objava: this._id}).exec()
-    await Korisnik.findByIdAndUpdate(this.korisnik, {$pull: {"objave": {_id: this._id}}}).exec()
-    
-  })
+  // //prema službenoj dokumentaciji findByIdAndRemove() funkcija okida findOneAndRemove() middleware
+  // objavaSchema.post('findOneAndRemove', async function(){
+  //   await Komentar.deleteMany({objava: this._id}).exec()
+  //   await Korisnik.findByIdAndUpdate(this.korisnik, {$pull: {"objave": {_id: this._id}}}).exec()
+  // })
 
-  //prema službenoj dokumentaciji save() funkcija okida validate() hook
-  objavaSchema.post('validate', async function(){
-    await Korisnik.findByIdAndUpdate(this.korisnik._id, {$push: {"objave": {_id: this._id}}}).exec()
-    
-  })
+  // //prema službenoj dokumentaciji save() funkcija okida validate() hook
+  // objavaSchema.post('validate', async function(){
+  //   await Korisnik.findByIdAndUpdate(this.korisnik._id, {$push: {"objave": {_id: this._id}}}).exec()
+  // })
 
 
 const Objava = mongoose.model('Objava', objavaSchema, 'objave')

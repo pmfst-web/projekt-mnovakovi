@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import objaveAkcije from './services/objave'
 
@@ -11,11 +11,14 @@ const NovaObjavaForma = (props) =>{
 
     const novaObjava = (e) =>{
         e.preventDefault()
+        objaveAkcije.postaviToken(props.korisnik.token)
+        console.log(props.korisnik.token)
         const novaObjava = {
-            sadrzaj: unosSadrzaja
+            sadrzaj: unosSadrzaja,
+            korisnikId: props.korisnik.id
         }
+        console.log(props.korisnik.id)
         objaveAkcije.stvori(novaObjava)
-        // axios.post('http://localhost:3001/api/objave', novaObjava)
         .then(res => {
             props.postaviObjave(props.objave.concat(res.data))
             postaviUnos('')
