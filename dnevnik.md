@@ -62,3 +62,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Ispravljene greške iz prethodnog zapisa. 
 Rad na frontendu: mogućnost prijave korisnika, postavljanja i brisanja objava i komentara, prikaz opcija za brisanje i uređivanje objava ukoliko pripadaju prijavljenom korisniku (problem: gumbovi vidljivi tek nakon ponovne prijave korisnika i/ili ponovnog učitavanja stranice).
+
+## 29.03.2023.
+Pocetak | Kraj
+------- | ----
+18:05   | xx:xx
+### Kratki opis promjena
