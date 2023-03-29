@@ -66,5 +66,6 @@ Rad na frontendu: mogućnost prijave korisnika, postavljanja i brisanja objava i
 ## 29.03.2023.
 Pocetak | Kraj
 ------- | ----
-18:05   | xx:xx
+18:05   | 19:10
 ### Kratki opis promjena
+Mogućnost registracije korisnika (komponenta RegisterForma) i uređivanja sadržaja objava koje pripadaju korisniku.

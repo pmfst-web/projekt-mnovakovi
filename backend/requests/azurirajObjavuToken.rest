@@ -1,6 +1,6 @@
-PUT http://localhost:3001/api/objave/64173bd00f3d75dd0f79c191
+PUT http://localhost:3001/api/objave/64232638870cfd969b452580
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1ajIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaWQiOiI2NDE1Y2YwYmNhNTNlNzQ3OTRmOGZkOWUiLCJpYXQiOjE2NzkyNDQyNjJ9.tiuXpri8ZbacbUEbGOOwmKJEDeLcHoxF3OUHCadhfbM
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjY0MjMxYTFkODcwY2ZkOTY5YjQ1MjQ4MSIsImlhdCI6MTY4MDEwODg2OX0.9N6O1nM-SeduP31oqxzpJ1C2o41rTJ1qqy3SUGNSXWE
 
 {
   "sadrzaj": "OBJAVAAZURIRANA",

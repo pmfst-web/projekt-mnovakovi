@@ -35,7 +35,13 @@ const LoginForma = (props) =>{
           alert("Neispravni podaci");
         }
     }
-    if(!props.korisnik){
+
+    const ponistiPrijavu = (e) =>{
+        e.preventDefault()
+        props.postaviRegistracija(true)
+    }
+
+    if(!props.korisnik && !props.registracija){
         return(
             <div>
                 <h1>Prijava</h1>
@@ -48,7 +54,8 @@ const LoginForma = (props) =>{
                         Password:
                         <input type="password" value={pass} name="Pass" onChange={promjenaPass}></input>
                     </div>
-                    <button type='submit'>Prijava</button>
+                    <button type='submit'>Potvrdi</button>
+                    <button onClick={ponistiPrijavu}>Registracija</button>
                 </form>
             </div>  
         )

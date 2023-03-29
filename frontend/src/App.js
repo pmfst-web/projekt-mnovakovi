@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Objava from './components/Objava'
 import NovaObjavaForma from './components/NovaObjavaForma'
 import LoginForma from './components/LoginForma'
+import RegisterForma from './components/RegisterForma'
 import axios from 'axios'
 
 const App = (props) => {
@@ -9,6 +10,7 @@ const App = (props) => {
     const [objave, postaviObjave] = useState([])
     const [komentari, postaviKomentare] = useState([])
     const [korisnik, postaviKorisnika] = useState(null)
+    const [registracija, postaviRegistracija] = useState(false)
 
 
 
@@ -27,7 +29,8 @@ const App = (props) => {
 
     return(
         <div>
-            <LoginForma korisnik={korisnik} postaviKorisnika={postaviKorisnika}/>
+            <RegisterForma registracija={registracija} postaviRegistracija={postaviRegistracija}/>
+            <LoginForma korisnik={korisnik} postaviKorisnika={postaviKorisnika} postaviRegistracija={postaviRegistracija} registracija={registracija}/>
             <NovaObjavaForma objave={objave} postaviObjave={postaviObjave} korisnik={korisnik}/>
             <h1>Objave</h1>
             <ul>

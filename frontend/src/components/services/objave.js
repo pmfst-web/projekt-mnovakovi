@@ -23,7 +23,7 @@ const osvjezi = async (id, noviObjekt) => {
     const config = {
         headers: {Authorization: token}
     }
-    const odgovor = await axios.put(`${osnovniUrl}/${id}`, config)
+    const odgovor = await axios.put(`${osnovniUrl}/${id}`,noviObjekt, config)
     return odgovor
 }
 

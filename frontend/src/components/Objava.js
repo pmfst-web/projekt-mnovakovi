@@ -64,8 +64,6 @@ const NoviKomentar = (props) => {
     else{
         return null
     }
-    
-
 }
 
 const Objava = (props) => {
@@ -79,8 +77,7 @@ const Objava = (props) => {
     useEffect(()=>{
         if(props.korisnik){
             objaveAkcije.postaviToken(props.korisnik.token)
-            postaviPripada(props.korisnik.id === props.objava.korisnik.id)   
-            
+            postaviPripada(props.korisnik.id === props.objava.korisnik.id)             
         }
     }, [props.korisnik])
 
@@ -124,6 +121,7 @@ const Objava = (props) => {
             ...props.objava,
             sadrzaj: sadrzajNovi
         }
+        console.log(modObjava)
         objaveAkcije.osvjezi(props.objava.id, modObjava)
         .then(res =>{
             props.postaviObjave(props.objave.map(o => o.id !== props.objava.id ? o : res.data))
@@ -140,8 +138,8 @@ const Objava = (props) => {
     return(
         <div>
             <input value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></input>
-            <button onClick={promijeniUredjivanje} hidden={!pripada}>Uredi</button>
-            <button onClick={obrisiObjavu} hidden={!pripada}>Obriši</button>
+            <button onClick={promijeniUredjivanje} hidden={!pripada || uredjivanje}>Uredi</button>
+            <button onClick={obrisiObjavu} hidden={!pripada || uredjivanje}>Obriši</button>
             <UrediObjavu uredjivanje={uredjivanje} ponistiUredjivanje={ponistiUredjivanje} osvjeziSadrzaj={osvjeziSadrzaj} />
 
             <div>
