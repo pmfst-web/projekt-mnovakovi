@@ -69,3 +69,9 @@ Pocetak | Kraj
 18:05   | 19:10
 ### Kratki opis promjena
 Mogućnost registracije korisnika (komponenta RegisterForma) i uređivanja sadržaja objava koje pripadaju korisniku.
+
+## 08.04.2023.
+Pocetak | Kraj
+------- | ----
+17:00   | xx:xx
+### Kratki opis promjena
