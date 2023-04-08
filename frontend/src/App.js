@@ -12,20 +12,21 @@ const App = (props) => {
     const [korisnik, postaviKorisnika] = useState(null)
     const [registracija, postaviRegistracija] = useState(false)
 
-
-
     useEffect(()=>{
         console.log('Dohvaćanje objava')
         axios.get('http://localhost:3001/api/objave')
-        .then(res => postaviObjave(res.data))
+        .then(res => {
+            postaviObjave(res.data)
+        })
     },[])
 
     useEffect(()=>{
         console.log('Dohvaćanje komentara')
         axios.get('http://localhost:3001/api/komentari')
-        .then(res => postaviKomentare(res.data))
+        .then(res => {
+            postaviKomentare(res.data)
+        })
     },[])
-
 
     return(
         <div>

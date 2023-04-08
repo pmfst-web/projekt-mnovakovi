@@ -73,5 +73,6 @@ Mogućnost registracije korisnika (komponenta RegisterForma) i uređivanja sadr�
 ## 08.04.2023.
 Pocetak | Kraj
 ------- | ----
-17:00   | xx:xx
+17:00   | 19:30
 ### Kratki opis promjena
+Mogućnost (un)likeanja objava.

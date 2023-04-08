@@ -48,8 +48,9 @@ objaveRouter.put('/:id', async (req, res) => {
         sadrzaj: podatak.sadrzaj,
         datum: podatak.datum,
         likeovi: podatak.likeovi,
-        komentari: podatak.komentari
+        // komentari: podatak.komentari
     }
+    console.log(id)
   
     const novaObjava = await Objava.findByIdAndUpdate(id, objava, {new: true})
     res.json(novaObjava)

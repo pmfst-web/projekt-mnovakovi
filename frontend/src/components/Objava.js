@@ -41,7 +41,7 @@ const NoviKomentar = (props) => {
         }
         komentariAkcije.stvori(komentarNovi)
         .then(res => {
-            props.postaviKomentare(props.komentari.concat(res.data))
+            props.postaviKomentare(props.komentari.concat(res.data)) /////??????????
             ponistiKomentiranje()
         })
         
@@ -77,28 +77,18 @@ const Objava = (props) => {
     useEffect(()=>{
         if(props.korisnik){
             objaveAkcije.postaviToken(props.korisnik.token)
-            postaviPripada(props.korisnik.id === props.objava.korisnik.id)             
+            postaviPripada(props.korisnik.id === props.objava.korisnik.id)            
         }
     }, [props.korisnik])
 
-    
-
-    // useEffect(()=>{
-    //     if(props.korisnik){
-    //         postaviPripada(props.korisnik.id === props.objava.korisnik.id)      
-    //     }
-    // }, [])
-
-    // const pripadaKorisniku = props.korisnik ? props.korisnik.id === props.objava.korisnik.id : false
-    const komentariOdObjave = props.komentari.filter( k => k.objava === props.objava.id)
+    const komentariOdObjave = props.komentari.filter( k => k.objava.id === props.objava.id)
 
     const obrisiObjavu = () =>{
         objaveAkcije.brisi(props.objava.id)
         .then(res => {
             props.postaviKomentare(props.komentari.filter(k => k.objava !== props.objava.id))
             props.postaviObjave(props.objave.filter(o => o.id !== props.objava.id))
-        })
-        
+        })       
     }
 
     const promjenaSadrzaja = (e) => {
@@ -135,15 +125,40 @@ const Objava = (props) => {
 
     }
 
+    const like_unlike = () =>{
+        if(props.objava.likeovi.includes(props.korisnik.id)){
+            const modObjava = {
+                ...props.objava,
+                likeovi: props.objava.likeovi.filter(k => k!==props.korisnik.id)
+            }
+            objaveAkcije.osvjezi(props.objava.id, modObjava)
+            .then(res=>{
+                props.postaviObjave(props.objave.map(o => o.id!==props.objava.id ? o : modObjava))
+            })
+        }
+        else{
+            const modObjava = {
+                ...props.objava,
+                likeovi: props.objava.likeovi.concat(props.korisnik.id)
+            }
+            objaveAkcije.osvjezi(props.objava.id, modObjava)
+            .then(res=>{
+                props.postaviObjave(props.objave.map(o => o.id!==props.objava.id ? o : modObjava))
+            })
+        }
+    }
+
     return(
         <div>
             <input value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></input>
+            <br></br>
+            Likeovi: {props.objava.likeovi.length}
             <button onClick={promijeniUredjivanje} hidden={!pripada || uredjivanje}>Uredi</button>
             <button onClick={obrisiObjavu} hidden={!pripada || uredjivanje}>Obriši</button>
             <UrediObjavu uredjivanje={uredjivanje} ponistiUredjivanje={ponistiUredjivanje} osvjeziSadrzaj={osvjeziSadrzaj} />
 
             <div>
-                <button onClick={props.lajkajObjavu} hidden={!props.korisnik}>Like</button>
+                <button onClick={like_unlike} hidden={!props.korisnik}>Like</button>
                 <button onClick={promijeniKomentiranje} hidden={!props.korisnik}>Komentiraj</button>                
             </div>
             <NoviKomentar komentiranje={komentiranje} postaviKomentiranje={postaviKomentiranje} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objava={props.objava} objave={props.objave} postaviObjave={props.postaviObjave} korisnik={props.korisnik}/>
