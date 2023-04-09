@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import registracijaAkcije from "./services/register";
 
-const RegisterForma = (props) =>{
+const RegisterForma = ({registracija, postaviRegistracija}) =>{
     const [pass, postaviPass] = useState('')
     const [username, postaviUsername] = useState('')
     const [ime, postaviIme] = useState('')
@@ -54,10 +54,10 @@ const RegisterForma = (props) =>{
         postaviPass('')
         postaviIme('')
         postaviPrezime('')
-        props.postaviRegistracija(false)
+        postaviRegistracija(false)
     }
 
-    if(props.registracija){
+    if(registracija){
         return(
             <div>
                 <h1>Registracija</h1>

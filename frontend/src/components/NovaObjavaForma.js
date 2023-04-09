@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import objaveAkcije from './services/objave'
 
-const NovaObjavaForma = (props) =>{
+const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
     const [unosSadrzaja, postaviUnos] = useState('')
 
     const promjenaSadrzaja = (e) => {
@@ -11,22 +11,26 @@ const NovaObjavaForma = (props) =>{
 
     const novaObjava = (e) =>{
         e.preventDefault()
-        objaveAkcije.postaviToken(props.korisnik.token)
-        console.log(props.korisnik.token)
+        objaveAkcije.postaviToken(korisnik.token)
+        console.log(korisnik.token)
         const novaObjava = {
             sadrzaj: unosSadrzaja,
-            korisnikId: props.korisnik.id
+            korisnikId: korisnik.id
         }
-        console.log(props.korisnik.id)
+        console.log(korisnik.id)
         objaveAkcije.stvori(novaObjava)
         .then(res => {
-            props.postaviObjave(props.objave.concat(res.data))
+            const odgovor = {
+                ...res.data,
+                korisnik: {id: korisnik.id}
+            }
+            postaviObjave(objave.concat(odgovor))
+            console.log(res.data)
             postaviUnos('')
-        })
-        
+        })  
     }
 
-    if(props.korisnik){
+    if(korisnik){
         return(
             <div>
                 <h1>Dodaj objavu</h1>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import prijavaAkcije from "./services/login";
 
-const LoginForma = (props) =>{
+const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistracija}) =>{
     const [pass, postaviPass] = useState('')
     const [username, postaviUsername] = useState('')
 
@@ -27,7 +27,7 @@ const LoginForma = (props) =>{
         //     JSON.stringify(korisnik)
         //   );
         //   porukeAkcije.postaviToken(korisnik.token);
-          props.postaviKorisnika(korisnik);
+          postaviKorisnika(korisnik);
           postaviUsername("");
           postaviPass("");
           console.log(korisnik);
@@ -38,10 +38,10 @@ const LoginForma = (props) =>{
 
     const ponistiPrijavu = (e) =>{
         e.preventDefault()
-        props.postaviRegistracija(true)
+        postaviRegistracija(true)
     }
 
-    if(!props.korisnik && !props.registracija){
+    if(!korisnik && !registracija){
         return(
             <div>
                 <h1>Prijava</h1>

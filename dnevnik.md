@@ -80,5 +80,7 @@ Mogućnost (un)likeanja objava.
 ## 09.04.2023.
 Pocetak | Kraj
 ------- | ----
-17:30   | xx:xx
+17:30   | 19:15
 ### Kratki opis promjena
+Mogućnost odabira prikaza svih ili vlastitih objava (komponenta SveObjave).
+Dovršena početna struktura aplikacije.

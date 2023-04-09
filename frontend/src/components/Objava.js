@@ -4,13 +4,13 @@ import axios from 'axios'
 import objaveAkcije from './services/objave'
 import komentariAkcije from './services/komentari'
 
-const UrediObjavu = (props) => {
+const UrediObjavu = ({uredjivanje, ponistiUredjivanje, osvjeziSadrzaj}) => {
 
-    if(props.uredjivanje){
+    if(uredjivanje){
         return(
-            <form onSubmit={props.osvjeziSadrzaj}>
+            <form onSubmit={osvjeziSadrzaj}>
                 <button type='submit'>Potvrdi</button>
-                <button onClick={props.ponistiUredjivanje}>Odustani</button>
+                <button onClick={ponistiUredjivanje}>Odustani</button>
             </form>
         )
     }
@@ -19,14 +19,14 @@ const UrediObjavu = (props) => {
     }
 }
 
-const NoviKomentar = (props) => {
+const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKomentare, objava, objave, korisnik}) => {
     const [komentarNoviSadrzaj, postaviKomentrNovi] = useState('')
 
     useEffect(()=>{
-        if(props.korisnik){
-            komentariAkcije.postaviToken(props.korisnik.token)
+        if(korisnik){
+            komentariAkcije.postaviToken(korisnik.token)
         }
-    }, [props.korisnik, props.objave])
+    }, [korisnik, objave])
 
     const promijeniKomentarNovi = (e) =>{
         postaviKomentrNovi(e.target.value)
@@ -36,12 +36,16 @@ const NoviKomentar = (props) => {
         e.preventDefault()
         const komentarNovi = {
             sadrzaj: komentarNoviSadrzaj,
-            objava: props.objava.id,
-            korisnikId: props.korisnik.id
+            objava: objava.id,
+            korisnikId: korisnik.id
         }
         komentariAkcije.stvori(komentarNovi)
         .then(res => {
-            props.postaviKomentare(props.komentari.concat(res.data)) /////??????????
+            const odgovor = {
+                ...res.data,
+                objava: {id: objava.id}
+            }
+            postaviKomentare(komentari.concat(odgovor)) /////??????????
             ponistiKomentiranje()
         })
         
@@ -49,15 +53,15 @@ const NoviKomentar = (props) => {
 
     const ponistiKomentiranje = () =>{
         postaviKomentrNovi('')
-        props.postaviKomentiranje(false)
+        postaviKomentiranje(false)
     }
 
-    if(props.komentiranje){
+    if(komentiranje){
         return(
             <form onSubmit={dodajKomentar}>
             <input value={komentarNoviSadrzaj} onChange={promijeniKomentarNovi}></input>
             <button type='submit'>Potvrdi</button>
-            <button onClick={props.ponistiKomentiranje}>Odustani</button>
+            <button onClick={ponistiKomentiranje}>Odustani</button>
             </form>
         )
     }
@@ -66,28 +70,28 @@ const NoviKomentar = (props) => {
     }
 }
 
-const Objava = (props) => {
+const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, korisnik}) => {
 
-    const [sadrzaj, postaviSadrzaj] = useState(props.objava.sadrzaj)
-    const [sadrzajNovi, postaviSadrzajNovi] = useState(props.objava.sadrzaj)
+    const [sadrzaj, postaviSadrzaj] = useState(objava.sadrzaj)
+    const [sadrzajNovi, postaviSadrzajNovi] = useState(objava.sadrzaj)
     const [uredjivanje, postaviUredjivanje] = useState(false)
     const [komentiranje, postaviKomentiranje] = useState(false)
-    const [pripada, postaviPripada] = useState(props.korisnik ? true : false)
+    const [pripada, postaviPripada] = useState(korisnik ? true : false)
 
     useEffect(()=>{
-        if(props.korisnik){
-            objaveAkcije.postaviToken(props.korisnik.token)
-            postaviPripada(props.korisnik.id === props.objava.korisnik.id)            
+        if(korisnik){
+            objaveAkcije.postaviToken(korisnik.token)
+            postaviPripada(korisnik.id === objava.korisnik.id)            
         }
-    }, [props.korisnik])
+    }, [korisnik])
 
-    const komentariOdObjave = props.komentari.filter( k => k.objava.id === props.objava.id)
+    const komentariOdObjave = komentari.filter( k => k.objava.id === objava.id)
 
     const obrisiObjavu = () =>{
-        objaveAkcije.brisi(props.objava.id)
+        objaveAkcije.brisi(objava.id)
         .then(res => {
-            props.postaviKomentare(props.komentari.filter(k => k.objava !== props.objava.id))
-            props.postaviObjave(props.objave.filter(o => o.id !== props.objava.id))
+            postaviKomentare(komentari.filter(k => k.objava !== objava.id))
+            postaviObjave(objave.filter(o => o.id !== objava.id))
         })       
     }
 
@@ -108,13 +112,13 @@ const Objava = (props) => {
         e.preventDefault()
         postaviSadrzaj(sadrzajNovi)
         const modObjava = {
-            ...props.objava,
+            ...objava,
             sadrzaj: sadrzajNovi
         }
         console.log(modObjava)
-        objaveAkcije.osvjezi(props.objava.id, modObjava)
+        objaveAkcije.osvjezi(objava.id, modObjava)
         .then(res =>{
-            props.postaviObjave(props.objave.map(o => o.id !== props.objava.id ? o : res.data))
+            postaviObjave(objave.map(o => o.id !== objava.id ? o : res.data))
             promijeniUredjivanje()
         })
     }
@@ -126,24 +130,24 @@ const Objava = (props) => {
     }
 
     const like_unlike = () =>{
-        if(props.objava.likeovi.includes(props.korisnik.id)){
+        if(objava.likeovi.includes(korisnik.id)){
             const modObjava = {
-                ...props.objava,
-                likeovi: props.objava.likeovi.filter(k => k!==props.korisnik.id)
+                ...objava,
+                likeovi: objava.likeovi.filter(k => k !== korisnik.id)
             }
-            objaveAkcije.osvjezi(props.objava.id, modObjava)
+            objaveAkcije.osvjezi(objava.id, modObjava)
             .then(res=>{
-                props.postaviObjave(props.objave.map(o => o.id!==props.objava.id ? o : modObjava))
+                postaviObjave(objave.map(o => o.id !== objava.id ? o : modObjava))
             })
         }
         else{
             const modObjava = {
-                ...props.objava,
-                likeovi: props.objava.likeovi.concat(props.korisnik.id)
+                ...objava,
+                likeovi: objava.likeovi.concat(korisnik.id)
             }
-            objaveAkcije.osvjezi(props.objava.id, modObjava)
+            objaveAkcije.osvjezi(objava.id, modObjava)
             .then(res=>{
-                props.postaviObjave(props.objave.map(o => o.id!==props.objava.id ? o : modObjava))
+                postaviObjave(objave.map(o => o.id !== objava.id ? o : modObjava))
             })
         }
     }
@@ -151,20 +155,39 @@ const Objava = (props) => {
     return(
         <div>
             <input value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></input>
-            <br></br>
-            Likeovi: {props.objava.likeovi.length}
             <button onClick={promijeniUredjivanje} hidden={!pripada || uredjivanje}>Uredi</button>
             <button onClick={obrisiObjavu} hidden={!pripada || uredjivanje}>Obriši</button>
-            <UrediObjavu uredjivanje={uredjivanje} ponistiUredjivanje={ponistiUredjivanje} osvjeziSadrzaj={osvjeziSadrzaj} />
+            <br></br>
+            Likeovi: {objava.likeovi.length}
+            
+            <UrediObjavu uredjivanje={uredjivanje} 
+            ponistiUredjivanje={ponistiUredjivanje} 
+            osvjeziSadrzaj={osvjeziSadrzaj} />
 
             <div>
-                <button onClick={like_unlike} hidden={!props.korisnik}>Like</button>
-                <button onClick={promijeniKomentiranje} hidden={!props.korisnik}>Komentiraj</button>                
+                <button onClick={like_unlike} hidden={!korisnik}>Like</button>
+                <button onClick={promijeniKomentiranje} hidden={!korisnik}>Komentiraj</button>                
             </div>
-            <NoviKomentar komentiranje={komentiranje} postaviKomentiranje={postaviKomentiranje} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objava={props.objava} objave={props.objave} postaviObjave={props.postaviObjave} korisnik={props.korisnik}/>
+
+            <NoviKomentar komentiranje={komentiranje} 
+            postaviKomentiranje={postaviKomentiranje} 
+            komentari={komentari} 
+            postaviKomentare={postaviKomentare} 
+            objava={objava} 
+            objave={objave} 
+            korisnik={korisnik}/>
+
             <ul>
                 {
-                    komentariOdObjave.map( k => <Komentar komentar={k} key={k.id} komentari={props.komentari} postaviKomentare={props.postaviKomentare} objave={props.objave} postaviObjave={props.postaviObjave} objava={props.objava} korisnik={props.korisnik}/>)
+                    komentariOdObjave.map( k => 
+                    <Komentar komentar={k} 
+                    key={k.id} 
+                    komentari={komentari} 
+                    postaviKomentare={postaviKomentare} 
+                    objave={objave} 
+                    postaviObjave={postaviObjave} 
+                    objava={objava} 
+                    korisnik={korisnik}/>)
                 }
             </ul>
         </div>

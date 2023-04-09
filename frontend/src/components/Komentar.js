@@ -3,26 +3,26 @@ import axios from 'axios'
 import komentariAkcije from './services/komentari'
 import objaveAkcije from './services/objave'
 
-const Komentar = (props) => {
+const Komentar = ({komentar, komentari, postaviKomentare, korisnik}) => {
 
-    const [pripada, postaviPripada] = useState(props.korisnik ? true : false)
+    const [pripada, postaviPripada] = useState(korisnik ? true : false)
 
     useEffect(()=>{
-        if(props.korisnik){
-            postaviPripada(props.korisnik.id === props.komentar.korisnik.id)            
+        if(korisnik){
+            postaviPripada(korisnik.id === komentar.korisnik.id)            
         }
-    }, [props.korisnik])
+    }, [korisnik])
 
     const obrisiKomentar = () => {
-        komentariAkcije.brisi(props.komentar.id)
+        komentariAkcije.brisi(komentar.id)
         .then(res => {
-            props.postaviKomentare(props.komentari.filter(k => k.id !== props.komentar.id))
+            postaviKomentare(komentari.filter(k => k.id !== komentar.id))
         })
         
     }
     return(
         <div>
-            {props.komentar.sadrzaj}
+            {komentar.sadrzaj}
             <button onClick={obrisiKomentar} hidden={!pripada}>Obriši</button>
         </div>
     )

@@ -3,6 +3,7 @@ import Objava from './components/Objava'
 import NovaObjavaForma from './components/NovaObjavaForma'
 import LoginForma from './components/LoginForma'
 import RegisterForma from './components/RegisterForma'
+import SveObjave from './components/SveObjave'
 import axios from 'axios'
 
 const App = (props) => {
@@ -30,16 +31,38 @@ const App = (props) => {
 
     return(
         <div>
-            <RegisterForma registracija={registracija} postaviRegistracija={postaviRegistracija}/>
-            <LoginForma korisnik={korisnik} postaviKorisnika={postaviKorisnika} postaviRegistracija={postaviRegistracija} registracija={registracija}/>
-            <NovaObjavaForma objave={objave} postaviObjave={postaviObjave} korisnik={korisnik}/>
-            <h1>Objave</h1>
+            <RegisterForma registracija={registracija} 
+            postaviRegistracija={postaviRegistracija}/>
+
+            <LoginForma korisnik={korisnik} 
+            postaviKorisnika={postaviKorisnika} 
+            postaviRegistracija={postaviRegistracija} 
+            registracija={registracija}/>
+
+            <NovaObjavaForma objave={objave} 
+            postaviObjave={postaviObjave} 
+            korisnik={korisnik}/>
+
+            {/* <h1>Objave</h1>
             <ul>
                 {
-                    objave.map( o => <Objava objava={o} key={o.id} objave={objave} postaviObjave={postaviObjave} komentari={komentari} postaviKomentare={postaviKomentare} korisnik={korisnik}/>)
+                    objave.map( o => 
+                    <Objava objava={o} 
+                    key={o.id} 
+                    objave={objave} 
+                    postaviObjave={postaviObjave} 
+                    komentari={komentari} 
+                    postaviKomentare={postaviKomentare} 
+                    korisnik={korisnik}/>)
                 }
-            </ul>
+            </ul> */}
 
+            <SveObjave objave={objave} 
+            postaviObjave={postaviObjave} 
+            komentari={komentari} 
+            postaviKomentare={postaviKomentare} 
+            korisnik={korisnik}/>
+            
         </div>
     )
 }
