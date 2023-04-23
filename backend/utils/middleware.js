@@ -21,6 +21,9 @@ const errorHandler = (err, req, res, next ) => {
       return res.status(400).send({error: err.message})
   }  else if (err.name === 'JsonWebTokenError'){
       return res.status(401).json({error: 'nesipravni token'})
+  } else if(err.name ==='MongoServerError' && err.code === 11000){
+    return res.status(422).json({error: 'Korisnik s ovim korisničkim imenom već postoji'})
+
   }
   next(err)
 }

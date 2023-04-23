@@ -5,6 +5,7 @@ import LoginForma from './components/LoginForma'
 import RegisterForma from './components/RegisterForma'
 import SveObjave from './components/SveObjave'
 import axios from 'axios'
+import '../node_modules/bootstrap/dist/css/bootstrap.css'
 
 const App = (props) => {
 
@@ -30,7 +31,7 @@ const App = (props) => {
     },[])
 
     return(
-        <div>
+        <div  style = {{height:"100vh"}}>
             <RegisterForma registracija={registracija} 
             postaviRegistracija={postaviRegistracija}/>
 
@@ -43,19 +44,7 @@ const App = (props) => {
             postaviObjave={postaviObjave} 
             korisnik={korisnik}/>
 
-            {/* <h1>Objave</h1>
-            <ul>
-                {
-                    objave.map( o => 
-                    <Objava objava={o} 
-                    key={o.id} 
-                    objave={objave} 
-                    postaviObjave={postaviObjave} 
-                    komentari={komentari} 
-                    postaviKomentare={postaviKomentare} 
-                    korisnik={korisnik}/>)
-                }
-            </ul> */}
+            
 
             <SveObjave objave={objave} 
             postaviObjave={postaviObjave} 

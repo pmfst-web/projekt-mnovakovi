@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import prijavaAkcije from "./services/login";
+import "../../node_modules/bootstrap/dist/css/bootstrap.css"
+import "../index.css"
 
 const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistracija}) =>{
     const [pass, postaviPass] = useState('')
@@ -31,8 +33,10 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
           postaviUsername("");
           postaviPass("");
           console.log(korisnik);
-        } catch (exception) {
-          alert("Neispravni podaci");
+        } catch (err) {
+            const upozorenje = document.getElementById('upozorenje')
+            upozorenje.hidden=false
+            upozorenje.innerText=err.response.data.error
         }
     }
 
@@ -43,20 +47,28 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
 
     if(!korisnik && !registracija){
         return(
-            <div>
-                <h1>Prijava</h1>
-                <form onSubmit={userLogin}>
-                    <div>
-                        Username:
-                        <input type="text" value={username} name="Username" onChange={promjenaUsername}></input>
+            <div className='vh-100'>
+                <div className='row h-100 justify-content-center align-items-center'>
+                    <div className='login-register col-7 col-sm-6 col-md-5 col-lg-4 border border-4 rounded-4'>
+                        <h1>Prijava</h1>
+                        <form id='loginform' onSubmit={userLogin}>
+                            <div className='form-group'>
+                                <label >Korisničko ime</label>
+                                <input id='loginUname' type="text" value={username} name="Username" onChange={promjenaUsername} className='form-control'placeholder='Unesite korisničko ime'></input>   
+                            </div>
+                            <div className='form-group'>
+                            <label>Lozinka</label>
+                                <input id='loginPass' type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control' placeholder='Unesite lozinku'></input>
+                            </div>
+                            <button type='submit' className='btn btn-primary btn-block mb-4'>Prijava</button>
+                            <div id='upozorenje' className='alert alert-danger' hidden={true}></div>
+                            <div className='text-center'>
+                                <p>Nemate profil?</p>
+                                <button type='button' className='btn btn-link btn-floating mb-1' onClick={ponistiPrijavu}>Registracija</button>
+                            </div>
+                        </form>
                     </div>
-                    <div>
-                        Password:
-                        <input type="password" value={pass} name="Pass" onChange={promjenaPass}></input>
-                    </div>
-                    <button type='submit'>Potvrdi</button>
-                    <button onClick={ponistiPrijavu}>Registracija</button>
-                </form>
+                </div>
             </div>  
         )
     }

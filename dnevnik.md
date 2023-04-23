@@ -88,5 +88,6 @@ Dovršena početna struktura aplikacije.
 ## 23.04.2023.
 Pocetak | Kraj
 ------- | ----
-14:00   | xx:xx
+14:00   | 16:55
 ### Kratki opis promjena
+Implementacija Bootstrap okvira: Dorađen izgled formi za prijavu i registraciju.
