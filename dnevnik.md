@@ -84,3 +84,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Mogućnost odabira prikaza svih ili vlastitih objava (komponenta SveObjave).
 Dovršena početna struktura aplikacije.
+
+## 23.04.2023.
+Pocetak | Kraj
+------- | ----
+14:00   | xx:xx
+### Kratki opis promjena
