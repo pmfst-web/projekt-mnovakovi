@@ -6,7 +6,7 @@ const autorizacija = require('../utils/autorizacija')
 
 objaveRouter.get('/', async (req, res) => {
     const rezultat = await Objava.find({})
-    .populate('korisnik', {_id: 1})
+    .populate('korisnik', {_id: 1, username: 1})
     .populate('komentari', {_id: 1})
     res.json(rezultat)
 })

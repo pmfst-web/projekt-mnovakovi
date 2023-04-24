@@ -6,7 +6,7 @@ const autorizacija = require('../utils/autorizacija')
 
 komentariRouter.get('/', async (req, res) => {
     const rezultat = await Komentar.find({})
-    .populate('korisnik', {_id: 1})
+    .populate('korisnik', {_id: 1, username: 1})
     .populate('objava', {_id: 1})
     res.json(rezultat)
 })

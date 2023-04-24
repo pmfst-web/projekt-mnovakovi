@@ -95,6 +95,7 @@ Implementacija Bootstrap okvira: Dorađen izgled formi za prijavu i registraciju
 ## 24.04.2023.
 Pocetak | Kraj
 ------- | ----
-13:20   | xx:xx
+13:20   | 18:30
 ### Kratki opis promjena
+Dorađen izgled forme za dodavanje novih objava, rad na izgledu objava.
 

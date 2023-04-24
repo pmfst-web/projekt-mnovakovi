@@ -3,6 +3,17 @@ import Komentar from './Komentar'
 import axios from 'axios'
 import objaveAkcije from './services/objave'
 import komentariAkcije from './services/komentari'
+import "../../node_modules/bootstrap/dist/css/bootstrap.css"
+import "../../node_modules/bootstrap/dist/js/bootstrap"
+import "../index.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {faThumbsUp} from '@fortawesome/free-solid-svg-icons'
+import {faComment} from '@fortawesome/free-solid-svg-icons'
+import {faEllipsis} from '@fortawesome/free-solid-svg-icons'
+
+
+library.add(faThumbsUp, faComment, faEllipsis)
 
 const UrediObjavu = ({uredjivanje, ponistiUredjivanje, osvjeziSadrzaj}) => {
 
@@ -153,21 +164,31 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     }
 
     return(
-        <div>
-            <input value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></input>
-            <button onClick={promijeniUredjivanje} hidden={!pripada || uredjivanje}>Uredi</button>
-            <button onClick={obrisiObjavu} hidden={!pripada || uredjivanje}>Obriši</button>
-            <br></br>
+        <div className='card mt-3'>
+            <div className='objava-header card-header d-flex justify-content-between'>
+                <h6 className='fw-bold'>{objava.korisnik.username}</h6>
+                <div class="dropdown">
+                    <button hidden={!pripada || uredjivanje} class="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <FontAwesomeIcon icon={faEllipsis} />
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" onClick={promijeniUredjivanje} href="javascript:return false;">Uredi</a></li>
+                      <li><a class="dropdown-item" onClick={obrisiObjavu} href="javascript:return false;">Obriši</a></li>
+                    </ul>
+                </div>
+            </div>
+            <textarea className="form-control mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></textarea>
+            <div className='card-footer'>
+                <button type='button' className='btn btn-tertiary text-primary me-4' onClick={like_unlike}><FontAwesomeIcon icon={faThumbsUp}/>  Like</button>
+                <button type='button' className='btn btn-tertiary text-primary' onClick={promijeniKomentiranje}><FontAwesomeIcon icon={faComment}/>  Komentiraj</button>                
+            </div>
             Likeovi: {objava.likeovi.length}
             
             <UrediObjavu uredjivanje={uredjivanje} 
             ponistiUredjivanje={ponistiUredjivanje} 
             osvjeziSadrzaj={osvjeziSadrzaj} />
 
-            <div>
-                <button onClick={like_unlike} hidden={!korisnik}>Like</button>
-                <button onClick={promijeniKomentiranje} hidden={!korisnik}>Komentiraj</button>                
-            </div>
+            
 
             <NoviKomentar komentiranje={komentiranje} 
             postaviKomentiranje={postaviKomentiranje} 

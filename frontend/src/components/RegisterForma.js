@@ -90,7 +90,7 @@ const RegisterForma = ({registracija, postaviRegistracija}) =>{
                                 <label>Lozinka</label>
                                 <input type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control'placeholder='Unesite lozinku'></input>
                             </div>
-                            <button type='submit' className='btn btn-primary btn-block mb-4'>Registracija</button>
+                            <button type='submit' className='btn btn-primary form-control mt-3'>Registracija</button>
                             <div id='upozorenje' className='alert alert-danger' hidden={true}></div>
                             <div id='uspjeh' className='alert alert-success' hidden={true}></div>
                             <div className='text-center'>

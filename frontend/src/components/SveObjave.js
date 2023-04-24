@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Objava from './Objava'
+import "../../node_modules/bootstrap/dist/css/bootstrap.css"
+import "../index.css"
 
 const SveObjave = ({objave, postaviObjave, komentari, postaviKomentare, korisnik}) =>{
 
@@ -20,12 +22,18 @@ const SveObjave = ({objave, postaviObjave, komentari, postaviKomentare, korisnik
 
     if(korisnik){
         return(
-            <div>
+            <div className='container mt-5 wh-100'>
+                <div className='col'>
                 <h1>Objave</h1>
-                <input type="radio" onClick={promijeniPrikaz} id="sve" name='prikazObjave' value="sve" defaultChecked></input>
-                <label htmlFor='sve'>Sve objave</label>
-                <input type="radio" onClick={promijeniPrikaz} id="moje" name='prikazObjave' value="moje"></input>
-                <label htmlFor='moje'>Moje objave</label>
+                <div className='form-check form-check-inline'>
+                    <input className='form-check-input' type="radio" onClick={promijeniPrikaz} id="sve" name='prikazObjave' value="sve" defaultChecked></input>
+                    <label className='form-check-label' htmlFor='sve'>Sve objave</label>
+                </div>
+                <div className='form-check form-check-inline'>
+                    <input className='form-check-input' type="radio" onClick={promijeniPrikaz} id="moje" name='prikazObjave' value="moje"></input>
+                    <label className='form-check-label' htmlFor='moje'>Moje objave</label>
+                </div>
+                
                 <ul>
                 {
                     objaveZaPrikaz().map( o => 
@@ -37,7 +45,9 @@ const SveObjave = ({objave, postaviObjave, komentari, postaviKomentare, korisnik
                     postaviKomentare={postaviKomentare} 
                     korisnik={korisnik}/>)
                 }
-            </ul>
+                </ul>
+                </div>
+                
             </div>
         )
     }

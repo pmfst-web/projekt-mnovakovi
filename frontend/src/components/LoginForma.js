@@ -60,7 +60,7 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
                             <label>Lozinka</label>
                                 <input id='loginPass' type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control' placeholder='Unesite lozinku'></input>
                             </div>
-                            <button type='submit' className='btn btn-primary btn-block mb-4'>Prijava</button>
+                            <button type='submit' className='btn btn-primary form-control mt-3'>Prijava</button>
                             <div id='upozorenje' className='alert alert-danger' hidden={true}></div>
                             <div className='text-center'>
                                 <p>Nemate profil?</p>
