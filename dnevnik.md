@@ -99,3 +99,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Dorađen izgled forme za dodavanje novih objava, rad na izgledu objava.
 
+## 25.04.2023.
+Pocetak | Kraj
+------- | ----
+13:15   | xx:xx
+### Kratki opis promjena
+
