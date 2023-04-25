@@ -44,7 +44,7 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
         return(
                 <div className='row wh-100 mt-5 justify-content-center'>
                     <div className='col-9 col-sm-8 col-md-7 col-lg-6 justify-content-center'>
-                        <div className='card gx-0 rounded-0'>
+                        <div className='card shadow gx-0 rounded-0'>
                             <div className='card-header'>
                                 NOVA OBJAVA
                             </div>

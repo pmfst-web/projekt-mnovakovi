@@ -26,3 +26,25 @@ code {
     background-color: rgb(96, 96, 214) !important;
 }
 
+.komentar-sadr {
+  display: inline-block;
+  height: max-content;
+  width: 85%;
+}
+
+.no-resize {
+  resize: none;
+  color: white;
+  height: 100% !important;
+  height: auto !important;
+  overflow-y: hidden !important;
+}
+
+textarea:disabled {
+  background-color: white !important;
+}
+
+.edit{
+  background-color:aliceblue !important;
+}
+

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import Komentar from './Komentar'
 import axios from 'axios'
 import objaveAkcije from './services/objave'
@@ -11,7 +11,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {faThumbsUp} from '@fortawesome/free-solid-svg-icons'
 import {faComment} from '@fortawesome/free-solid-svg-icons'
 import {faEllipsis} from '@fortawesome/free-solid-svg-icons'
-
 
 library.add(faThumbsUp, faComment, faEllipsis)
 
@@ -54,7 +53,8 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
         .then(res => {
             const odgovor = {
                 ...res.data,
-                objava: {id: objava.id}
+                objava: {id: objava.id},
+                korisnik: {id: korisnik.id, username: korisnik.username}
             }
             postaviKomentare(komentari.concat(odgovor)) /////??????????
             ponistiKomentiranje()
@@ -88,6 +88,11 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     const [uredjivanje, postaviUredjivanje] = useState(false)
     const [komentiranje, postaviKomentiranje] = useState(false)
     const [pripada, postaviPripada] = useState(korisnik ? true : false)
+    const [liked, postaviLiked] = useState(false)
+    const [btnLikeClass, postaviBtnLikeClass] = useState('btn btn-tertiary text-secondary me-4')
+    const sadrzajRef = useRef(null)
+
+    const komentariOdObjave = komentari.filter( k => k.objava.id === objava.id)
 
     useEffect(()=>{
         if(korisnik){
@@ -96,7 +101,27 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
         }
     }, [korisnik])
 
-    const komentariOdObjave = komentari.filter( k => k.objava.id === objava.id)
+    useEffect(()=>{
+        if(objava.likeovi.includes(korisnik.id)){
+            postaviLiked(true)
+            postaviBtnLikeClass('btn btn-tertiary text-primary me-4')
+        }
+        else{
+            postaviLiked(false)
+            postaviBtnLikeClass('btn btn-tertiary text-secondary me-4')
+        }
+
+    }, [objava])
+
+    useEffect(() => {
+        if (sadrzajRef && sadrzajRef.current) {
+          sadrzajRef.current.style.height = "0px";
+          const taHeight = sadrzajRef.current.scrollHeight;
+          sadrzajRef.current.style.height = taHeight + "px";
+        }
+    },[]);
+
+    
 
     const obrisiObjavu = () =>{
         objaveAkcije.brisi(objava.id)
@@ -115,6 +140,8 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
         postaviUredjivanje(!uredjivanje)
     }
 
+    
+
     const promijeniKomentiranje = () =>{
         postaviKomentiranje(!komentiranje)
     }
@@ -126,10 +153,13 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
             ...objava,
             sadrzaj: sadrzajNovi
         }
-        console.log(modObjava)
         objaveAkcije.osvjezi(objava.id, modObjava)
         .then(res =>{
-            postaviObjave(objave.map(o => o.id !== objava.id ? o : res.data))
+            const odgovor = {
+                ...res.data,
+                korisnik: {id: korisnik.id, username:korisnik.username}
+            }
+            postaviObjave(objave.map(o => o.id !== objava.id ? o : odgovor))
             promijeniUredjivanje()
         })
     }
@@ -140,8 +170,8 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
 
     }
 
-    const like_unlike = () =>{
-        if(objava.likeovi.includes(korisnik.id)){
+    const like_unlike = (e) =>{
+        if(liked){
             const modObjava = {
                 ...objava,
                 likeovi: objava.likeovi.filter(k => k !== korisnik.id)
@@ -164,31 +194,35 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     }
 
     return(
-        <div className='card mt-3'>
+        <div className='card shadow mt-3'>
             <div className='objava-header card-header d-flex justify-content-between'>
                 <h6 className='fw-bold'>{objava.korisnik.username}</h6>
-                <div class="dropdown">
-                    <button hidden={!pripada || uredjivanje} class="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <div className="dropdown">
+                    <button hidden={!pripada || uredjivanje} className="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <FontAwesomeIcon icon={faEllipsis} />
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" onClick={promijeniUredjivanje} href="javascript:return false;">Uredi</a></li>
-                      <li><a class="dropdown-item" onClick={obrisiObjavu} href="javascript:return false;">Obriši</a></li>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a className="dropdown-item" onMouseUp={promijeniUredjivanje} href="javascript:return false;">Uredi</a></li>
+                      <li><a className="dropdown-item" onClick={obrisiObjavu} href="javascript:return false;">Obriši</a></li>
                     </ul>
                 </div>
             </div>
-            <textarea className="form-control mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje} size={sadrzajNovi.length}></textarea>
-            <div className='card-footer'>
-                <button type='button' className='btn btn-tertiary text-primary me-4' onClick={like_unlike}><FontAwesomeIcon icon={faThumbsUp}/>  Like</button>
-                <button type='button' className='btn btn-tertiary text-primary' onClick={promijeniKomentiranje}><FontAwesomeIcon icon={faComment}/>  Komentiraj</button>                
+            <textarea ref={sadrzajRef} className="form-control edit no-resize mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje}></textarea>
+            <div className='card-footer border-bottom py-0 d-flex justify-content-between'>
+                <div>
+                    <button type='button' className={btnLikeClass} onClick={like_unlike}><FontAwesomeIcon icon={faThumbsUp}/>  Like</button>
+                    <button type='button' className='btn btn-tertiary text-secondary' onClick={promijeniKomentiranje}><FontAwesomeIcon icon={faComment}/>  Komentiraj</button>   
+                </div>
+                <div className='d-flex align-items-center'>
+                    <span className='fw-bold text-secondary me-2'>Likeovi: {objava.likeovi.length}</span>
+                    <span className='fw-bold text-secondary'>Komentari: {komentariOdObjave.length}</span>
+                </div>
+                             
             </div>
-            Likeovi: {objava.likeovi.length}
             
             <UrediObjavu uredjivanje={uredjivanje} 
             ponistiUredjivanje={ponistiUredjivanje} 
             osvjeziSadrzaj={osvjeziSadrzaj} />
-
-            
 
             <NoviKomentar komentiranje={komentiranje} 
             postaviKomentiranje={postaviKomentiranje} 
@@ -198,7 +232,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
             objave={objave} 
             korisnik={korisnik}/>
 
-            <ul>
+            <ul className='container'>
                 {
                     komentariOdObjave.map( k => 
                     <Komentar komentar={k} 

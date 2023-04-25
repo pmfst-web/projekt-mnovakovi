@@ -102,6 +102,7 @@ Dorađen izgled forme za dodavanje novih objava, rad na izgledu objava.
 ## 25.04.2023.
 Pocetak | Kraj
 ------- | ----
-13:15   | xx:xx
+13:15   | 17:40
 ### Kratki opis promjena
+Nastavak rada na izgledu objava.
 
