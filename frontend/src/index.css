@@ -40,11 +40,11 @@ code {
   overflow-y: hidden !important;
 }
 
-textarea:disabled {
-  background-color: white !important;
+.edit{
+  background-color: lightsteelblue;
 }
 
-.edit{
-  background-color:aliceblue !important;
+button:disabled{
+  border: none;
 }
 

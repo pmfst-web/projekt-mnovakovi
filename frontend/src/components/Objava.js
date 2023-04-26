@@ -19,8 +19,8 @@ const UrediObjavu = ({uredjivanje, ponistiUredjivanje, osvjeziSadrzaj}) => {
     if(uredjivanje){
         return(
             <form onSubmit={osvjeziSadrzaj}>
-                <button type='submit'>Potvrdi</button>
-                <button onClick={ponistiUredjivanje}>Odustani</button>
+                <button className=' py-1 me-2 ms-1 btn btn-primary my-1' type='submit'>Potvrdi</button>
+                <button className=' py-1 btn btn-danger' onClick={ponistiUredjivanje}>Odustani</button>
             </form>
         )
     }
@@ -31,6 +31,7 @@ const UrediObjavu = ({uredjivanje, ponistiUredjivanje, osvjeziSadrzaj}) => {
 
 const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKomentare, objava, objave, korisnik}) => {
     const [komentarNoviSadrzaj, postaviKomentrNovi] = useState('')
+    const upozorenjeRef = useRef(null)
 
     useEffect(()=>{
         if(korisnik){
@@ -42,15 +43,17 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
         postaviKomentrNovi(e.target.value)
     }
 
-    const dodajKomentar = (e) =>{
+    const dodajKomentar = async (e) =>{
         e.preventDefault()
+        const upozorenje = upozorenjeRef.current
+        upozorenje.hidden=true
         const komentarNovi = {
             sadrzaj: komentarNoviSadrzaj,
             objava: objava.id,
             korisnikId: korisnik.id
         }
-        komentariAkcije.stvori(komentarNovi)
-        .then(res => {
+        try{
+            const res = await komentariAkcije.stvori(komentarNovi)
             const odgovor = {
                 ...res.data,
                 objava: {id: objava.id},
@@ -58,21 +61,26 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
             }
             postaviKomentare(komentari.concat(odgovor)) /////??????????
             ponistiKomentiranje()
-        })
-        
+        }
+        catch(err){
+            upozorenje.hidden=false
+            upozorenje.innerText=err.response.data.error
+        }   
     }
 
     const ponistiKomentiranje = () =>{
         postaviKomentrNovi('')
         postaviKomentiranje(false)
+        upozorenjeRef.current.hidden=true
     }
 
     if(komentiranje){
         return(
-            <form onSubmit={dodajKomentar}>
-            <input value={komentarNoviSadrzaj} onChange={promijeniKomentarNovi}></input>
-            <button type='submit'>Potvrdi</button>
-            <button onClick={ponistiKomentiranje}>Odustani</button>
+            <form className='border-bottom mt-1' onSubmit={dodajKomentar}>
+            <input className='form-control' value={komentarNoviSadrzaj} onChange={promijeniKomentarNovi} placeholder='Unesite novi komentar'></input>
+            <button className=' py-1 me-2 ms-1 btn btn-primary my-1' type='submit'>Potvrdi</button>
+            <button className=' py-1 btn btn-danger' onClick={ponistiKomentiranje}>Odustani</button>
+            <span ref={upozorenjeRef} id='upozorenje' className='row my-1 mx-0 py-1 alert alert-danger' hidden={true}></span>
             </form>
         )
     }
@@ -91,6 +99,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     const [liked, postaviLiked] = useState(false)
     const [btnLikeClass, postaviBtnLikeClass] = useState('btn btn-tertiary text-secondary me-4')
     const sadrzajRef = useRef(null)
+    const upozorenjeRef = useRef(null)
 
     const komentariOdObjave = komentari.filter( k => k.objava.id === objava.id)
 
@@ -113,16 +122,6 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
 
     }, [objava])
 
-    useEffect(() => {
-        if (sadrzajRef && sadrzajRef.current) {
-          sadrzajRef.current.style.height = "0px";
-          const taHeight = sadrzajRef.current.scrollHeight;
-          sadrzajRef.current.style.height = taHeight + "px";
-        }
-    },[]);
-
-    
-
     const obrisiObjavu = () =>{
         objaveAkcije.brisi(objava.id)
         .then(res => {
@@ -132,8 +131,20 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     }
 
     const promjenaSadrzaja = (e) => {
-        postaviSadrzajNovi(e.target.value)
-
+        postaviSadrzajNovi(e.target.innerText)
+        var el = sadrzajRef.current
+        var range = document.createRange();
+        var sel = window.getSelection();
+        if (el.childNodes.length > 0) {
+            var el2 = el.childNodes[el.childNodes.length - 1];
+            range.setStartAfter(el2);
+          } else {
+            range.setStartAfter(el);
+          }
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        console.log(sadrzajRef.current.innerText)
     }
 
     const promijeniUredjivanje = () => {
@@ -146,28 +157,36 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
         postaviKomentiranje(!komentiranje)
     }
     
-    const osvjeziSadrzaj = (e) =>{
+    const osvjeziSadrzaj = async(e) =>{
         e.preventDefault()
-        postaviSadrzaj(sadrzajNovi)
+        const upozorenje = upozorenjeRef.current
+        upozorenje.hidden=true
+        // postaviSadrzaj(sadrzajNovi)
         const modObjava = {
             ...objava,
             sadrzaj: sadrzajNovi
         }
-        objaveAkcije.osvjezi(objava.id, modObjava)
-        .then(res =>{
+        console.log(modObjava)
+        try{
+            const res = await objaveAkcije.osvjezi(objava.id, modObjava)
             const odgovor = {
                 ...res.data,
                 korisnik: {id: korisnik.id, username:korisnik.username}
             }
             postaviObjave(objave.map(o => o.id !== objava.id ? o : odgovor))
             promijeniUredjivanje()
-        })
+        }
+        catch(err){
+            upozorenje.hidden=false
+            upozorenje.innerText=err.response.data.error
+        }    
     }
 
     const ponistiUredjivanje = () => {
         postaviSadrzajNovi(sadrzaj)
+        upozorenjeRef.current.hidden=true
+        sadrzajRef.current.innerText = sadrzajNovi
         promijeniUredjivanje()
-
     }
 
     const like_unlike = (e) =>{
@@ -194,24 +213,29 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     }
 
     return(
-        <div className='card shadow mt-3'>
+        <div className='card shadow mt-3 col-lg-7'>
             <div className='objava-header card-header d-flex justify-content-between'>
                 <h6 className='fw-bold'>{objava.korisnik.username}</h6>
                 <div className="dropdown">
-                    <button hidden={!pripada || uredjivanje} className="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button hidden={!pripada || uredjivanje} disabled={komentiranje} className="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <FontAwesomeIcon icon={faEllipsis} />
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a className="dropdown-item" onMouseUp={promijeniUredjivanje} href="javascript:return false;">Uredi</a></li>
-                      <li><a className="dropdown-item" onClick={obrisiObjavu} href="javascript:return false;">Obriši</a></li>
+                      <li><a className="dropdown-item" onMouseUp={promijeniUredjivanje}>Uredi</a></li>
+                      <li><a className="dropdown-item" onClick={obrisiObjavu} >Obriši</a></li>
                     </ul>
                 </div>
             </div>
-            <textarea ref={sadrzajRef} className="form-control edit no-resize mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje}></textarea>
+            {/* <textarea ref={sadrzajRef} className="form-control edit no-resize mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje}></textarea> */}
+            <span ref={sadrzajRef} className='form-control' contentEditable={uredjivanje} suppressContentEditableWarning={true} onInput={promjenaSadrzaja}>{sadrzajNovi}</span>
+            <span ref={upozorenjeRef} id='upozorenje' className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
+            <UrediObjavu uredjivanje={uredjivanje} 
+            ponistiUredjivanje={ponistiUredjivanje} 
+            osvjeziSadrzaj={osvjeziSadrzaj} />
             <div className='card-footer border-bottom py-0 d-flex justify-content-between'>
                 <div>
-                    <button type='button' className={btnLikeClass} onClick={like_unlike}><FontAwesomeIcon icon={faThumbsUp}/>  Like</button>
-                    <button type='button' className='btn btn-tertiary text-secondary' onClick={promijeniKomentiranje}><FontAwesomeIcon icon={faComment}/>  Komentiraj</button>   
+                    <button type='button' disabled={komentiranje || uredjivanje} className={btnLikeClass} onClick={like_unlike}><FontAwesomeIcon icon={faThumbsUp}/>  Like</button>
+                    <button type='button' disabled={komentiranje || uredjivanje} className='btn btn-tertiary text-secondary' onClick={promijeniKomentiranje}><FontAwesomeIcon icon={faComment}/>  Komentiraj</button>   
                 </div>
                 <div className='d-flex align-items-center'>
                     <span className='fw-bold text-secondary me-2'>Likeovi: {objava.likeovi.length}</span>
@@ -219,10 +243,6 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
                 </div>
                              
             </div>
-            
-            <UrediObjavu uredjivanje={uredjivanje} 
-            ponistiUredjivanje={ponistiUredjivanje} 
-            osvjeziSadrzaj={osvjeziSadrzaj} />
 
             <NoviKomentar komentiranje={komentiranje} 
             postaviKomentiranje={postaviKomentiranje} 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import axios from 'axios'
 import objaveAkcije from './services/objave'
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
@@ -7,13 +7,15 @@ import "../index.css"
 const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
     const [unosSadrzaja, postaviUnos] = useState('')
 
+    const upozorenjeRef = useRef(null)
+
     const promjenaSadrzaja = (e) => {
         postaviUnos(e.target.value)
       }
 
     const novaObjava = async(e) =>{
         e.preventDefault()
-        const upozorenje = document.getElementById('upozorenje')
+        const upozorenje = upozorenjeRef.current
         upozorenje.hidden=true
         objaveAkcije.postaviToken(korisnik.token)
         const novaObjava = {
@@ -52,7 +54,7 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
                                 <textarea className="form-control mt-2" rows="3" placeholder="Ovdje unosite sadržaj objave" value={unosSadrzaja} onChange={promjenaSadrzaja}></textarea>
                                 <div className='row'>
                                 <button className='col-3 py-2 mx-3 btn btn-primary my-1' type='submit'>Objavi</button>
-                                <span id='upozorenje' className='col-auto my-1 py-1 alert alert-danger' hidden={true}>NEEE</span>
+                                <span ref={upozorenjeRef} id='upozorenje' className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
                                 </div>
                             </form>
                         </div>

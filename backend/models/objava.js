@@ -5,8 +5,8 @@ const Korisnik = require('./korisnik')
 const objavaSchema = new mongoose.Schema({
     sadrzaj: {
         type: String,
-        minlength: 5,
-        maxlength: 160,
+        minLength: 5,
+        maxLength: 160,
         required: true
     },
     datum: {

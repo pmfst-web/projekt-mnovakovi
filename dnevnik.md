@@ -109,6 +109,7 @@ Nastavak rada na izgledu objava.
 ## 26.04.2023.
 Pocetak | Kraj
 ------- | ----
-10:35   | xx:xx
+10:35   | 14:00
 ### Kratki opis promjena
+Nastavak rada na izgledu objava.
 

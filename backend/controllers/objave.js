@@ -52,7 +52,7 @@ objaveRouter.put('/:id', async (req, res) => {
     }
     console.log(id)
   
-    const novaObjava = await Objava.findByIdAndUpdate(id, objava, {new: true})
+    const novaObjava = await Objava.findOneAndUpdate({_id: id}, objava, {new: true,  runValidators: true})
     res.json(novaObjava)
   
 })

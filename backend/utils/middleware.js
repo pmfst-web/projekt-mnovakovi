@@ -19,8 +19,11 @@ const errorHandler = (err, req, res, next ) => {
       console.log(err.message)
       return res.status(400).send({error: 'krivi format ID-a'})
   } else if (err.name === 'ValidationError'){
-      if(err.message.startsWith('Objava validation failed')){
+      if(err.message.startsWith('Objava validation failed') || err.message.startsWith('Validation failed: sadrzaj') ){
         return res.status(400).json({error: 'Objava mora imati između 5 i 160 znakova'})
+      }
+      else if(err.message.startsWith('Komentar validation failed: sadrzaj')){
+        return res.status(400).json({error: 'Komentar mora imati između 5 i 50 znakova'})
       }
       return res.status(400).send({error: err.message})
   }  else if (err.name === 'JsonWebTokenError'){
