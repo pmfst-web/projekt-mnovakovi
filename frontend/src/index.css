@@ -41,7 +41,7 @@ code {
 }
 
 .edit{
-  background-color: lightsteelblue;
+  background-color: rgb(175, 207, 248) !important;
 }
 
 button:disabled{

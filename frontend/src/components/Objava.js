@@ -63,7 +63,7 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
             ponistiKomentiranje()
         }
         catch(err){
-            upozorenje.hidden=false
+            upozorenje.hidden=false     
             upozorenje.innerText=err.response.data.error
         }   
     }
@@ -98,6 +98,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     const [pripada, postaviPripada] = useState(korisnik ? true : false)
     const [liked, postaviLiked] = useState(false)
     const [btnLikeClass, postaviBtnLikeClass] = useState('btn btn-tertiary text-secondary me-4')
+    const [contentEditClass, postaviContentEditClass] = useState('form-control border-0');
     const sadrzajRef = useRef(null)
     const upozorenjeRef = useRef(null)
 
@@ -149,9 +150,13 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
 
     const promijeniUredjivanje = () => {
         postaviUredjivanje(!uredjivanje)
+        if(!uredjivanje){
+            postaviContentEditClass('form-control edit')
+        }
+        else{
+            postaviContentEditClass('form-control border-0')
+        }
     }
-
-    
 
     const promijeniKomentiranje = () =>{
         postaviKomentiranje(!komentiranje)
@@ -159,6 +164,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     
     const osvjeziSadrzaj = async(e) =>{
         e.preventDefault()
+        postaviSadrzaj(sadrzajNovi)
         const upozorenje = upozorenjeRef.current
         upozorenje.hidden=true
         // postaviSadrzaj(sadrzajNovi)
@@ -183,6 +189,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     }
 
     const ponistiUredjivanje = () => {
+        console.log(sadrzaj)
         postaviSadrzajNovi(sadrzaj)
         upozorenjeRef.current.hidden=true
         sadrzajRef.current.innerText = sadrzajNovi
@@ -226,8 +233,9 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
                     </ul>
                 </div>
             </div>
+            <div className='text-muted ms-3 pt-1'>{new Date(objava.datum).toDateString()}</div>
             {/* <textarea ref={sadrzajRef} className="form-control edit no-resize mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje}></textarea> */}
-            <span ref={sadrzajRef} className='form-control' contentEditable={uredjivanje} suppressContentEditableWarning={true} onInput={promjenaSadrzaja}>{sadrzajNovi}</span>
+            <span ref={sadrzajRef} className={contentEditClass} contentEditable={uredjivanje} suppressContentEditableWarning={true} onInput={promjenaSadrzaja}>{sadrzajNovi}</span>
             <span ref={upozorenjeRef} id='upozorenje' className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
             <UrediObjavu uredjivanje={uredjivanje} 
             ponistiUredjivanje={ponistiUredjivanje} 

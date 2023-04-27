@@ -116,6 +116,7 @@ Nastavak rada na izgledu objava.
 ## 27.04.2023.
 Pocetak | Kraj
 ------- | ----
-14:25   | xx:xx
+14:25   | 19:00
 ### Kratki opis promjena
+Početak rada na backend testovima: definirani testovi za korisnike i objave.
 

@@ -5,9 +5,15 @@ const Objava = require('./objava')
 const korisnikSchema = new mongoose.Schema({
     username: {
         type: String,
-        unique: true
+        unique: true,
+        minLength: 5,
+        maxLength: 10
     },
-    ime: String,
+    ime: {
+        type: String,
+        minLength: 6,
+        maxLength: 25
+    },
     passHash: String,
     objave: [
         {

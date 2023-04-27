@@ -14,7 +14,7 @@ loginRouter.post('/', async(req, res, next)=>{
 
     if(!(korisnik && passDobar)){
         res.status(401).json(
-            {error: 'Neispravna lozinka ili username'})
+            {error: 'Neispravna lozinka ili korisničko ime'})
     } 
 
     const userToken = {
