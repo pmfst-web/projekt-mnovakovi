@@ -31,7 +31,6 @@ objaveRouter.delete('/:id', async (req, res) => {
     const obrisanaObjava = await Objava.findByIdAndRemove(req.params.id)
     await Komentar.deleteMany({objava: obrisanaObjava._id}).exec()
     await Korisnik.findByIdAndUpdate(obrisanaObjava.korisnik, {$pull: {"objave": {_id: obrisanaObjava._id}}}).exec()
-
     res.status(204).end()
 })
 
@@ -50,11 +49,8 @@ objaveRouter.put('/:id', async (req, res) => {
         likeovi: podatak.likeovi,
         // komentari: podatak.komentari
     }
-    console.log(id)
-  
     const novaObjava = await Objava.findOneAndUpdate({_id: id}, objava, {new: true,  runValidators: true})
     res.json(novaObjava)
-  
 })
 
 objaveRouter.post('/', async (req, res, next) => {
@@ -64,7 +60,7 @@ objaveRouter.post('/', async (req, res, next) => {
     if(!token || !dekodiraniToken.id){
         return res.status(401).json({error: 'Neispravan token'})
     }
-  
+
     const objava = new Objava({
         sadrzaj: podatak.sadrzaj,
         datum: new Date().toISOString(),
@@ -73,9 +69,7 @@ objaveRouter.post('/', async (req, res, next) => {
 
     const spremljenaObjava = await objava.save()
     await Korisnik.findByIdAndUpdate(spremljenaObjava.korisnik, {$push: {"objave": {_id: spremljenaObjava._id}}}).exec()
-
-    res.json(spremljenaObjava)
-    
+    res.json(spremljenaObjava)   
 })
 
 module.exports = objaveRouter

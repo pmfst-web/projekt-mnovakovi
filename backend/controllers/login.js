@@ -32,8 +32,6 @@ loginRouter.post('/', async(req, res, next)=>{
     })
 
     next()
-
-
 })
 
 module.exports = loginRouter;

@@ -123,6 +123,7 @@ Početak rada na backend testovima: definirani testovi za korisnike i objave.
 ## 28.04.2023.
 Pocetak | Kraj
 ------- | ----
-13:25   | xx:xx
+13:25   | 16:00
 ### Kratki opis promjena
+Natavak rada na backend testovima: modificirani testovi za korisnike i objave, definirani testovi za komentare.
 

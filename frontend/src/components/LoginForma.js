@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import axios from 'axios'
 import prijavaAkcije from "./services/login";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
@@ -7,6 +7,7 @@ import "../index.css"
 const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistracija}) =>{
     const [pass, postaviPass] = useState('')
     const [username, postaviUsername] = useState('')
+    const upozorenjeRef = useRef(null)
 
 
     const promjenaUsername = (e) =>{
@@ -34,7 +35,7 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
           postaviPass("");
           console.log(korisnik);
         } catch (err) {
-            const upozorenje = document.getElementById('upozorenje')
+            const upozorenje = upozorenjeRef.current
             upozorenje.hidden=false
             upozorenje.innerText=err.response.data.error
         }
@@ -61,7 +62,7 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
                                 <input id='loginPass' type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control' placeholder='Unesite lozinku'></input>
                             </div>
                             <button type='submit' className='btn btn-primary form-control mt-3'>Prijava</button>
-                            <div id='upozorenje' className='alert alert-danger' hidden={true}></div>
+                            <div id='upozorenje' ref={upozorenjeRef} className='alert alert-danger py-2 mt-2' hidden={true}></div>
                             <div className='text-center'>
                                 <p>Nemate profil?</p>
                                 <button type='button' className='btn btn-link btn-floating mb-1' onClick={ponistiPrijavu}>Registracija</button>

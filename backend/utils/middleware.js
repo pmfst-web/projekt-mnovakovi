@@ -16,7 +16,6 @@ const errorHandler = (err, req, res, next ) => {
   logger.greska(err.message);
 
   if (err.name === 'CastError') {
-      console.log(err.message)
       return res.status(400).send({error: 'Krivi format ID-a'})
   } else if (err.name === 'ValidationError'){
       if(err.message.startsWith('Objava validation failed') || err.message.startsWith('Validation failed: sadrzaj') ){

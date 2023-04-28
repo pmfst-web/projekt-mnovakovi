@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const Korisnik = require('../models/korisnik')
-const pomocni = require('./test-pomocni')
+const {pocetniKorisnik, korisniciIzBaze} = require('./test-pomocni')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
@@ -9,8 +9,8 @@ const api = supertest(app)
 describe('Testovi s korisnicima', () => {
     beforeEach(async () => {
         await Korisnik.deleteMany({})
-        const passHash = await bcrypt.hash(pomocni.pocetniKorisnik.pass, 10)
-        const korisnik = new Korisnik({ime: pomocni.pocetniKorisnik.ime, username: pomocni.pocetniKorisnik.username, passHash})
+        const passHash = await bcrypt.hash(pocetniKorisnik.pass, 10)
+        const korisnik = new Korisnik({ime: pocetniKorisnik.ime, username: pocetniKorisnik.username, passHash})
         await korisnik.save()
     })
 
@@ -27,7 +27,7 @@ describe('Testovi s korisnicima', () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-        const korisniciKraj = await pomocni.korisniciIzBaze()
+        const korisniciKraj = await korisniciIzBaze()
         expect(korisniciKraj).toHaveLength(2)
 
         const korImena = korisniciKraj.map(u => u.username)
@@ -49,7 +49,7 @@ describe('Testovi s korisnicima', () => {
 
         expect(rezultat.body.error).toContain('Korisnik s ovim korisničkim imenom već postoji')
 
-        const korisniciKraj = await pomocni.korisniciIzBaze()
+        const korisniciKraj = await korisniciIzBaze()
         expect(korisniciKraj).toHaveLength(1)
         })
     
@@ -73,7 +73,7 @@ describe('Testovi s korisnicima', () => {
     
         expect(rezultat.body.error).toContain('Korisničko ime mora imati između 5 i 15 znakova')
     
-        const korisniciKraj = await pomocni.korisniciIzBaze()
+        const korisniciKraj = await korisniciIzBaze()
         expect(korisniciKraj).toHaveLength(1)
         })
     
@@ -100,6 +100,25 @@ describe('Testovi s korisnicima', () => {
         .expect(401)
         .expect('Content-Type', /application\/json/)
         expect(rezultat.body.error).toContain('Neispravna lozinka ili korisničko ime')
+    })
+
+    test('Registracija i prijava korisnika', async() =>{
+        const novi = {
+            username: 'testSest',
+            ime: 'Test Sest',
+            pass: 'testtest'
+        }
+        await api
+        .post('/api/korisnici')
+        .send(novi)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+        await api
+        .post('/api/login')
+        .send(novi)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
     })
     
 })

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const Objava = require('../models/objava')
 
 const dohvatiToken = (req) =>{
   //token je zapisan u zaglavlju
@@ -13,4 +14,10 @@ const verificirajToken = (token) =>{
     return jwt.verify(token, process.env.SECRET)
 }
 
-module.exports = {dohvatiToken, verificirajToken}
+const validirajIdObjave = async (id) => {
+  const odgovor = await Objava.findOne({_id: id})
+  return odgovor
+    
+}
+
+module.exports = {dohvatiToken, verificirajToken, validirajIdObjave}
