@@ -75,7 +75,7 @@ const RegisterForma = ({registracija, postaviRegistracija}) =>{
                 <div className='row h-100 justify-content-center align-items-center'>
                     <div className='login-register col-7 col-sm-6 col-md-5 col-lg-4 border border-4 rounded-4'>
                         <h1>Registracija</h1>
-                        <form id='registerForm' onSubmit={userRegister}>
+                        <form onSubmit={userRegister}>
                             <div>
                                 <label>Ime</label>
                                 <input type="text" value={ime} name="Ime" onChange={promjenaIme} className='form-control'placeholder='Unesite ime'></input>
@@ -93,8 +93,8 @@ const RegisterForma = ({registracija, postaviRegistracija}) =>{
                                 <input type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control'placeholder='Unesite lozinku'></input>
                             </div>
                             <button type='submit' className='btn btn-primary form-control mt-3'>Registracija</button>
-                            <div id='upozorenje' ref={upozorenjeRef} className='alert alert-danger py-2 mt-2' hidden={true}></div>
-                            <div id='uspjeh' ref={uspjehRef} className='alert alert-success py-2 mt-2' hidden={true}></div>
+                            <div ref={upozorenjeRef} className='alert alert-danger py-2 mt-2' hidden={true}></div>
+                            <div ref={uspjehRef} className='alert alert-success py-2 mt-2' hidden={true}></div>
                             <div className='text-center'>
                                 <p>Već imate profil?</p>
                                 <button type='button' className='btn btn-link btn-floating mb-1' onClick={ponistiRegistraciju}>Prijava</button>

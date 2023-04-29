@@ -54,7 +54,7 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
                                 <textarea className="form-control mt-2" rows="3" placeholder="Ovdje unosite sadržaj objave" value={unosSadrzaja} onChange={promjenaSadrzaja}></textarea>
                                 <div className='row'>
                                 <button className='col-3 py-2 mx-3 btn btn-primary my-1' type='submit'>Objavi</button>
-                                <span ref={upozorenjeRef} id='upozorenje' className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
+                                <span ref={upozorenjeRef} className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
                                 </div>
                             </form>
                         </div>

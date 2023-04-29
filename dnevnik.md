@@ -130,6 +130,7 @@ Natavak rada na backend testovima: modificirani testovi za korisnike i objave, d
 ## 29.04.2023.
 Pocetak | Kraj
 ------- | ----
-17:20   | xx:xx
+17:20   | 20:20
 ### Kratki opis promjena
+Početak rada na backend testovima: definirani testovi za formu za prijavu, započeti testovi za formu za registraciju.
 

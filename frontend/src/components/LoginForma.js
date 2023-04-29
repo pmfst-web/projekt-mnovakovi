@@ -48,21 +48,21 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
 
     if(!korisnik && !registracija){
         return(
-            <div className='vh-100'>
+            <div className='login vh-100'>
                 <div className='row h-100 justify-content-center align-items-center'>
                     <div className='login-register col-7 col-sm-6 col-md-5 col-lg-4 border border-4 rounded-4'>
                         <h1>Prijava</h1>
-                        <form id='loginform' onSubmit={userLogin}>
+                        <form onSubmit={userLogin}>
                             <div className='form-group'>
                                 <label >Korisničko ime</label>
-                                <input id='loginUname' type="text" value={username} name="Username" onChange={promjenaUsername} className='form-control'placeholder='Unesite korisničko ime'></input>   
+                                <input  type="text" value={username} name="Username" onChange={promjenaUsername} className='form-control username'placeholder='Unesite korisničko ime'></input>   
                             </div>
                             <div className='form-group'>
                             <label>Lozinka</label>
-                                <input id='loginPass' type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control' placeholder='Unesite lozinku'></input>
+                                <input type="password" value={pass} name="Pass" onChange={promjenaPass} className='form-control pass' placeholder='Unesite lozinku'></input>
                             </div>
                             <button type='submit' className='btn btn-primary form-control mt-3'>Prijava</button>
-                            <div id='upozorenje' ref={upozorenjeRef} className='alert alert-danger py-2 mt-2' hidden={true}></div>
+                            <div ref={upozorenjeRef} className='alert alert-danger py-2 mt-2' hidden={true}></div>
                             <div className='text-center'>
                                 <p>Nemate profil?</p>
                                 <button type='button' className='btn btn-link btn-floating mb-1' onClick={ponistiPrijavu}>Registracija</button>

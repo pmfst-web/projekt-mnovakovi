@@ -80,7 +80,7 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
             <input className='form-control' value={komentarNoviSadrzaj} onChange={promijeniKomentarNovi} placeholder='Unesite novi komentar'></input>
             <button className=' py-1 me-2 ms-1 btn btn-primary my-1' type='submit'>Potvrdi</button>
             <button className=' py-1 btn btn-danger' onClick={ponistiKomentiranje}>Odustani</button>
-            <span ref={upozorenjeRef} id='upozorenje' className='row my-1 mx-0 py-1 alert alert-danger' hidden={true}></span>
+            <span ref={upozorenjeRef} className='row my-1 mx-0 py-1 alert alert-danger' hidden={true}></span>
             </form>
         )
     }
@@ -224,7 +224,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
             <div className='objava-header card-header d-flex justify-content-between'>
                 <h6 className='fw-bold'>{objava.korisnik.username}</h6>
                 <div className="dropdown">
-                    <button hidden={!pripada || uredjivanje} disabled={komentiranje} className="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button hidden={!pripada || uredjivanje} disabled={komentiranje} className="btn btn btn-tertiary text-white dropdown-toggle py-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <FontAwesomeIcon icon={faEllipsis} />
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -236,7 +236,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
             <div className='text-muted ms-3 pt-1'>{new Date(objava.datum).toDateString()}</div>
             {/* <textarea ref={sadrzajRef} className="form-control edit no-resize mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje}></textarea> */}
             <span ref={sadrzajRef} className={contentEditClass} contentEditable={uredjivanje} suppressContentEditableWarning={true} onInput={promjenaSadrzaja}>{sadrzajNovi}</span>
-            <span ref={upozorenjeRef} id='upozorenje' className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
+            <span ref={upozorenjeRef} className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>
             <UrediObjavu uredjivanje={uredjivanje} 
             ponistiUredjivanje={ponistiUredjivanje} 
             osvjeziSadrzaj={osvjeziSadrzaj} />
