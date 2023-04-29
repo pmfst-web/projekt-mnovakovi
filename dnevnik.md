@@ -127,3 +127,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Natavak rada na backend testovima: modificirani testovi za korisnike i objave, definirani testovi za komentare.
 
+## 29.04.2023.
+Pocetak | Kraj
+------- | ----
+17:20   | xx:xx
+### Kratki opis promjena
+
