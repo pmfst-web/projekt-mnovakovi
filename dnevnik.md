@@ -132,11 +132,12 @@ Pocetak | Kraj
 ------- | ----
 17:20   | 20:20
 ### Kratki opis promjena
-Početak rada na backend testovima: definirani testovi za formu za prijavu, započeti testovi za formu za registraciju.
+Početak rada na frontend testovima: definirani testovi za formu za prijavu, započeti testovi za formu za registraciju.
 
 ## 30.04.2023.
 Pocetak | Kraj
 ------- | ----
-18:10   | xx:xx
+18:10   | 21:40
 ### Kratki opis promjena
+Nastavak rada na frontend testovima: definirani testovi za formu za registraciju, komponentu Objava i SveObjave.
 

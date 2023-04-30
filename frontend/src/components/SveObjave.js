@@ -27,11 +27,11 @@ const SveObjave = ({objave, postaviObjave, komentari, postaviKomentare, korisnik
                 <h1>Objave</h1>
                 <div className='form-check form-check-inline'>
                     <input className='form-check-input' type="radio" onClick={promijeniPrikaz} id="sve" name='prikazObjave' value="sve" defaultChecked></input>
-                    <label className='form-check-label' htmlFor='sve'>Sve objave</label>
+                    <label className='form-check-label sve' htmlFor='sve'>Sve objave</label>
                 </div>
                 <div className='form-check form-check-inline'>
                     <input className='form-check-input' type="radio" onClick={promijeniPrikaz} id="moje" name='prikazObjave' value="moje"></input>
-                    <label className='form-check-label' htmlFor='moje'>Moje objave</label>
+                    <label className='form-check-label moje' htmlFor='moje'>Moje objave</label>
                 </div>
                 
                 <ul>

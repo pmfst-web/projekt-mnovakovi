@@ -33,7 +33,6 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
           postaviKorisnika(korisnik);
           postaviUsername("");
           postaviPass("");
-          console.log(korisnik);
         } catch (err) {
             const upozorenje = upozorenjeRef.current
             upozorenje.hidden=false

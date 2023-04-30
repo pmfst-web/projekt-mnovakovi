@@ -22,7 +22,6 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
             sadrzaj: unosSadrzaja,
             korisnikId: korisnik.id
         }
-        console.log(korisnik.id)
         try{
             const objava = await objaveAkcije.stvori(novaObjava)
         
@@ -31,7 +30,6 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
                 korisnik: {id: korisnik.id, username: korisnik.username}
             }
             postaviObjave(objave.concat(odgovor))
-            console.log(objava.data)
             postaviUnos('')
         }  
         

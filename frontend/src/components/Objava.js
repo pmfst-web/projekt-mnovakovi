@@ -98,7 +98,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     const [pripada, postaviPripada] = useState(korisnik ? true : false)
     const [liked, postaviLiked] = useState(false)
     const [btnLikeClass, postaviBtnLikeClass] = useState('btn btn-tertiary text-secondary me-4')
-    const [contentEditClass, postaviContentEditClass] = useState('form-control border-0');
+    const [contentEditClass, postaviContentEditClass] = useState('form-control border-0 pt-0');
     const sadrzajRef = useRef(null)
     const upozorenjeRef = useRef(null)
 
@@ -145,16 +145,15 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
           range.collapse(true);
           sel.removeAllRanges();
           sel.addRange(range);
-        console.log(sadrzajRef.current.innerText)
     }
 
     const promijeniUredjivanje = () => {
         postaviUredjivanje(!uredjivanje)
         if(!uredjivanje){
-            postaviContentEditClass('form-control edit')
+            postaviContentEditClass('form-control edit pt-0')
         }
         else{
-            postaviContentEditClass('form-control border-0')
+            postaviContentEditClass('form-control border-0 pt-0')
         }
     }
 
@@ -167,12 +166,10 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
         postaviSadrzaj(sadrzajNovi)
         const upozorenje = upozorenjeRef.current
         upozorenje.hidden=true
-        // postaviSadrzaj(sadrzajNovi)
         const modObjava = {
             ...objava,
             sadrzaj: sadrzajNovi
         }
-        console.log(modObjava)
         try{
             const res = await objaveAkcije.osvjezi(objava.id, modObjava)
             const odgovor = {
@@ -189,7 +186,6 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
     }
 
     const ponistiUredjivanje = () => {
-        console.log(sadrzaj)
         postaviSadrzajNovi(sadrzaj)
         upozorenjeRef.current.hidden=true
         sadrzajRef.current.innerText = sadrzajNovi
