@@ -134,3 +134,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Početak rada na backend testovima: definirani testovi za formu za prijavu, započeti testovi za formu za registraciju.
 
+## 30.04.2023.
+Pocetak | Kraj
+------- | ----
+18:10   | xx:xx
+### Kratki opis promjena
+
