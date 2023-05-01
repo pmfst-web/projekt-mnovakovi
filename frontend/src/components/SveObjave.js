@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import Objava from './Objava'
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../index.css"
@@ -14,7 +14,7 @@ const SveObjave = ({objave, postaviObjave, komentari, postaviKomentare, korisnik
     }
 
     const objaveZaPrikaz = () =>{
-        if(prikaz=="sve")
+        if(prikaz==="sve")
         return objave
         else
         return objave.filter(o=>o.korisnik.id===korisnik.id)

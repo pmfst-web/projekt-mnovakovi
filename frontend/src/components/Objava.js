@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react'
 import Komentar from './Komentar'
-import axios from 'axios'
 import objaveAkcije from './services/objave'
 import komentariAkcije from './services/komentari'
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
@@ -33,12 +32,6 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
     const [komentarNoviSadrzaj, postaviKomentrNovi] = useState('')
     const upozorenjeRef = useRef(null)
 
-    useEffect(()=>{
-        if(korisnik){
-            komentariAkcije.postaviToken(korisnik.token)
-        }
-    }, [korisnik, objave])
-
     const promijeniKomentarNovi = (e) =>{
         postaviKomentrNovi(e.target.value)
     }
@@ -63,8 +56,10 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
             ponistiKomentiranje()
         }
         catch(err){
-            upozorenje.hidden=false     
-            upozorenje.innerText=err.response.data.error
+            if(err.response){
+                upozorenje.hidden=false     
+                upozorenje.innerText=err.response.data.error
+            }
         }   
     }
 
@@ -106,7 +101,6 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
 
     useEffect(()=>{
         if(korisnik){
-            objaveAkcije.postaviToken(korisnik.token)
             postaviPripada(korisnik.id === objava.korisnik.id)            
         }
     }, [korisnik])

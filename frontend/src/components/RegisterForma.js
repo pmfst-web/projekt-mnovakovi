@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
-import axios from 'axios'
+import React, {useState, useRef} from 'react'
 import registracijaAkcije from "./services/register";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../index.css"

@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
 import komentariAkcije from './services/komentari'
-import objaveAkcije from './services/objave'
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../../node_modules/bootstrap/dist/js/bootstrap"
 import "../index.css"

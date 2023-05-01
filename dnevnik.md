@@ -144,6 +144,8 @@ Nastavak rada na frontend testovima: definirani testovi za formu za registraciju
 ## 01.05.2023.
 Pocetak | Kraj
 ------- | ----
-17:30   | xx:xx
+17:30   | 18:35
 ### Kratki opis promjena
+Dodana komponenta za navigacijsku traku (NavTraka), mogućnost odjave korisnika.
+Dovršen prototip aplikacije.
 

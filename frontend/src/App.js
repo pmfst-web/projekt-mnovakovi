@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import Objava from './components/Objava'
 import NovaObjavaForma from './components/NovaObjavaForma'
 import LoginForma from './components/LoginForma'
 import RegisterForma from './components/RegisterForma'
+import NavTraka from './components/NavTraka'
 import SveObjave from './components/SveObjave'
 import axios from 'axios'
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import objaveAkcije from './components/services/objave'
+import komentariAkcije from './components/services/komentari'
 
 const App = (props) => {
 
@@ -30,8 +32,22 @@ const App = (props) => {
         })
     },[])
 
+    useEffect( () => {
+            const logiraniKorisnikJSON = window.localStorage.getItem('prijavljeniKorisnik')
+            if (logiraniKorisnikJSON) {
+            const korisnik = JSON.parse(logiraniKorisnikJSON)
+            postaviKorisnika(korisnik)
+            objaveAkcije.postaviToken(korisnik.token)
+            komentariAkcije.postaviToken(korisnik.token)
+            }
+        }, [])
+
     return(
-        <div  style = {{height:"100vh"}}>
+        <div className='white'  style = {{height:"100vh"}}>
+
+            <NavTraka korisnik={korisnik} 
+            postaviKorisnika={postaviKorisnika}/>
+
             <RegisterForma registracija={registracija} 
             postaviRegistracija={postaviRegistracija}/>
 
@@ -43,8 +59,6 @@ const App = (props) => {
             <NovaObjavaForma objave={objave} 
             postaviObjave={postaviObjave} 
             korisnik={korisnik}/>
-
-            
 
             <SveObjave objave={objave} 
             postaviObjave={postaviObjave} 

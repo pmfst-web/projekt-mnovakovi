@@ -1,6 +1,7 @@
-import React, {useEffect, useState, useRef} from 'react'
-import axios from 'axios'
+import React, {useState, useRef} from 'react'
 import prijavaAkcije from "./services/login";
+import objaveAkcije from './services/objave'
+import komentariAkcije from './services/komentari'
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../index.css"
 
@@ -25,11 +26,12 @@ const LoginForma = ({korisnik, postaviKorisnika, registracija, postaviRegistraci
             username,
             pass,
           });
-        //   window.localStorage.setItem(
-        //     "prijavljeniKorisnik",
-        //     JSON.stringify(korisnik)
-        //   );
-        //   porukeAkcije.postaviToken(korisnik.token);
+          window.localStorage.setItem(
+            "prijavljeniKorisnik",
+            JSON.stringify(korisnik)
+          );
+          objaveAkcije.postaviToken(korisnik.token)
+          komentariAkcije.postaviToken(korisnik.token)
           postaviKorisnika(korisnik);
           postaviUsername("");
           postaviPass("");

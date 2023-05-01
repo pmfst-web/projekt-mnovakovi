@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
-import axios from 'axios'
+import React, {useState, useRef} from 'react'
 import objaveAkcije from './services/objave'
 import "../../node_modules/bootstrap/dist/css/bootstrap.css"
 import "../index.css"
@@ -17,7 +16,6 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
         e.preventDefault()
         const upozorenje = upozorenjeRef.current
         upozorenje.hidden=true
-        objaveAkcije.postaviToken(korisnik.token)
         const novaObjava = {
             sadrzaj: unosSadrzaja,
             korisnikId: korisnik.id
@@ -34,8 +32,11 @@ const NovaObjavaForma = ({objave, postaviObjave, korisnik}) =>{
         }  
         
         catch(err){
-            upozorenje.hidden=false
-            upozorenje.innerText=err.response.data.error
+            if(err.response){
+                upozorenje.hidden=false
+                upozorenje.innerText=err.response.data.error
+            }
+            
         }
         
     }
