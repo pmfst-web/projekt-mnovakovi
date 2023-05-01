@@ -141,3 +141,9 @@ Pocetak | Kraj
 ### Kratki opis promjena
 Nastavak rada na frontend testovima: definirani testovi za formu za registraciju, komponentu Objava i SveObjave.
 
+## 01.05.2023.
+Pocetak | Kraj
+------- | ----
+17:30   | xx:xx
+### Kratki opis promjena
+
