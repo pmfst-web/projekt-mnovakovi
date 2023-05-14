@@ -84,7 +84,7 @@ describe('Komponenta <SveObjave/>', ()=>{
     test('Odabir prikaza samo korisnikovih objava renderira samo korisnikove objave', ()=>{
         const renderiraneObjave = komponenta.container.getElementsByClassName('card shadow mt-3 col-lg-7')
         expect(renderiraneObjave).toHaveLength(4)
-        const labelMoje = komponenta.container.getElementsByClassName('form-check-label moje')[0]
+        const labelMoje = komponenta.container.getElementsByClassName('dropdown-item')[1]
         fireEvent.click(labelMoje)
         expect(renderiraneObjave).toHaveLength(2)
     })

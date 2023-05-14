@@ -45,9 +45,7 @@ objaveRouter.put('/:id', async (req, res) => {
     
     const objava = {
         sadrzaj: podatak.sadrzaj,
-        datum: podatak.datum,
         likeovi: podatak.likeovi,
-        // komentari: podatak.komentari
     }
     const novaObjava = await Objava.findOneAndUpdate({_id: id}, objava, {new: true,  runValidators: true})
     res.json(novaObjava)
@@ -64,7 +62,7 @@ objaveRouter.post('/', async (req, res, next) => {
     const objava = new Objava({
         sadrzaj: podatak.sadrzaj,
         datum: new Date().toISOString(),
-        korisnik: podatak.korisnikId
+        korisnik: podatak.korisnik_ID
     })
 
     const spremljenaObjava = await objava.save()

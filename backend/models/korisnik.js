@@ -28,7 +28,7 @@ const korisnikSchema = new mongoose.Schema({
         }
     ]
 })
-// korisnikSchema.plugin(uniqueValidator)
+
 korisnikSchema.set('toJSON', {
     transform: (doc, ret) => {
         ret.id = ret._id.toString()

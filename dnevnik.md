@@ -152,6 +152,7 @@ Dovršen prototip aplikacije.
 ## 14.05.2023.
 Pocetak | Kraj
 ------- | ----
-17:00   | xx:xx
+17:00   | 22:00
 ### Kratki opis promjena
-
+Dodana mogućnost sortiranja objava po datumu (konzultacije). Sitne izmjene, brisanje nepotrebnih komentara i formatiranje koda radi veće preglednosti.
+Dovršena finalna verzija aplikacije.

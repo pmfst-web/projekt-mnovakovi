@@ -42,8 +42,8 @@ const NoviKomentar = ({komentiranje, postaviKomentiranje, komentari, postaviKome
         upozorenje.hidden=true
         const komentarNovi = {
             sadrzaj: komentarNoviSadrzaj,
-            objava: objava.id,
-            korisnikId: korisnik.id
+            objava_ID: objava.id,
+            korisnik_ID: korisnik.id
         }
         try{
             const res = await komentariAkcije.stvori(komentarNovi)
@@ -223,7 +223,7 @@ const Objava = ({objava, objave, postaviObjave, komentari, postaviKomentare, kor
                     </ul>
                 </div>
             </div>
-            <div className='text-muted ms-3 pt-1'>{new Date(objava.datum).toDateString()}</div>
+            <div className='text-muted ms-3 pt-1'>{new Date(objava.datum).toLocaleString("hr-HR", {hour12: false})}</div>
             {/* <textarea ref={sadrzajRef} className="form-control edit no-resize mt-2 mb-0" value={sadrzajNovi} onChange={promjenaSadrzaja} disabled={!uredjivanje}></textarea> */}
             <span ref={sadrzajRef} className={contentEditClass} contentEditable={uredjivanje} suppressContentEditableWarning={true} onInput={promjenaSadrzaja}>{sadrzajNovi}</span>
             <span ref={upozorenjeRef} className='col-auto my-1 py-1 alert alert-danger' hidden={true}></span>

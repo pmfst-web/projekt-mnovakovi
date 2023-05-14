@@ -18,14 +18,6 @@ const stvori = async (noviObjekt) => {
     const odgovor = await axios.post(osnovniUrl, noviObjekt, config)
     return odgovor
 }
- 
-const osvjezi = async (id, noviObjekt) => {
-    const config = {
-        headers: {Authorization: token}
-    }
-    const odgovor = await axios.put(`${osnovniUrl}/${id}`, noviObjekt, config)
-    return odgovor
-}
 
 const brisi = async (id) => {
     const config = {
@@ -35,4 +27,4 @@ const brisi = async (id) => {
     return odgovor
 }
  
-export default { dohvatiSve, stvori, osvjezi, brisi, postaviToken}
+export default { dohvatiSve, stvori, brisi, postaviToken}

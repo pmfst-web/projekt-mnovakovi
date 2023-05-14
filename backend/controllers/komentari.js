@@ -34,31 +34,6 @@ komentariRouter.delete('/:id', async (req, res) => {
     res.status(204).end()
 })
 
-komentariRouter.put('/:id', async (req, res) => {
-    const token = autorizacija.dohvatiToken(req)
-    const dekodiraniToken = autorizacija.verificirajToken(token)
-    if(!token || !dekodiraniToken.id){
-        return res.status(401).json({error: 'Neispravan token'})
-    }
-    const podatak = req.body
-    const id = req.params.id
-
-    const postojiObjava = await autorizacija.validirajIdObjave(podatak.objava)
-
-    if(!postojiObjava){
-        return res.status(400).json({error: 'Pripadajuća objava ne postoji ili je obrisana'})
-    }
-  
-    const komentar = {
-        sadrzaj: podatak.sadrzaj,
-        datum: podatak.datum,
-        objava: podatak.ID_objava
-    }
-  
-    const noviKomentar = await Komentar.findByIdAndUpdate(id, komentar, {new: true})
-    res.json(noviKomentar)
-})
-
 komentariRouter.post('/', async (req, res, next) => {
     const podatak = req.body
     const token = autorizacija.dohvatiToken(req)
@@ -67,7 +42,7 @@ komentariRouter.post('/', async (req, res, next) => {
         return res.status(401).json({error: 'Neispravan token'})
     }
 
-    const postojiObjava = await autorizacija.validirajIdObjave(podatak.objava)
+    const postojiObjava = await autorizacija.validirajIdObjave(podatak.objava_ID)
 
     if(!postojiObjava){
         return res.status(400).json({error: 'Pripadajuća objava ne postoji ili je obrisana'})
@@ -76,11 +51,9 @@ komentariRouter.post('/', async (req, res, next) => {
     const komentar = new Komentar({
         sadrzaj: podatak.sadrzaj,
         datum: new Date().toISOString(),
-        objava: podatak.objava,
-        korisnik: podatak.korisnikId
+        objava: podatak.objava_ID,
+        korisnik: podatak.korisnik_ID
     })
-
-    
 
     const spremljeniKomentar = await komentar.save()
     await Objava.findByIdAndUpdate(spremljeniKomentar.objava, {$push: {"komentari": {_id: spremljeniKomentar._id}}}).exec()

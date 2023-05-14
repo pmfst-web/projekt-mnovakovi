@@ -33,14 +33,16 @@ const App = (props) => {
     },[])
 
     useEffect( () => {
+
             const logiraniKorisnikJSON = window.localStorage.getItem('prijavljeniKorisnik')
             if (logiraniKorisnikJSON) {
-            const korisnik = JSON.parse(logiraniKorisnikJSON)
-            postaviKorisnika(korisnik)
-            objaveAkcije.postaviToken(korisnik.token)
-            komentariAkcije.postaviToken(korisnik.token)
+                const korisnik = JSON.parse(logiraniKorisnikJSON)
+                postaviKorisnika(korisnik)
+                objaveAkcije.postaviToken(korisnik.token)
+                komentariAkcije.postaviToken(korisnik.token)
             }
-        }, [])
+        }, []
+    )
 
     return(
         <div className='white'  style = {{height:"100vh"}}>

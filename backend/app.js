@@ -11,7 +11,7 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 
-logger.info('Spajam se na', config.DB_URI)
+logger.info('Spajam se na bazu')
 
 mongoose.connect(config.DB_URI,)
 .then(result => {

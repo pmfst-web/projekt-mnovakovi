@@ -36,7 +36,6 @@ describe('Komponenta <LoginForma/>', ()=>{
             <LoginForma korisnik={korisnik} registracija={registracija} 
             postaviRegistracija={postaviRegistracija} postaviKorisnika={postaviKorisnika}/>
         )
-        // const ponistiPrijavu = jest.spyOn(komponenta., 'ponistiPrijavu') 
         
         const btnRegistracija = komponenta.container.getElementsByClassName('btn btn-link btn-floating mb-1')[0]
 

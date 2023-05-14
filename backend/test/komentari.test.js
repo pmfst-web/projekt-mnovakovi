@@ -45,8 +45,8 @@ describe('Testovi s komentarima', () =>{
         
         const noviKomentar = {
             sadrzaj: "Novi komentar",
-            korisnikId: korisnik.body.id,
-            objava: prvaObjava.id
+            korisnik_ID: korisnik.body.id,
+            objava_ID: prvaObjava.id
         }
 
         const odgovor = await api
@@ -71,8 +71,8 @@ describe('Testovi s komentarima', () =>{
         
         const noviKomentar = {
             sadrzaj: "Novi",
-            korisnikId: korisnik.body.id,
-            objava: prvaObjava.id
+            korisnik_ID: korisnik.body.id,
+            objava_ID: prvaObjava.id
         }
 
         const odgovor = await api
@@ -95,8 +95,8 @@ describe('Testovi s komentarima', () =>{
         
         const noviKomentar = {
             sadrzaj: "Novi komentar",
-            korisnikId: korisnik.body.id,
-            objava: '644bb3facde46043bc515f69'
+            korisnik_ID: korisnik.body.id,
+            objava_ID: '644bb3facde46043bc515f69'
         }
 
         const odgovor = await api
@@ -112,8 +112,6 @@ describe('Testovi s komentarima', () =>{
         expect(objaveNaKraju[0].komentari).toHaveLength(0)
     })
 
-    
-
     test('Postavljanje novog komentara s neispravnim tokenom', async () => {
         const korisnik = await api
         .post('/api/login')
@@ -124,8 +122,8 @@ describe('Testovi s komentarima', () =>{
         
         const noviKomentar = {
             sadrzaj: "Novi komentar",
-            korisnikId: korisnik.body.id,
-            objava: prvaObjava.id
+            korisnik_ID: korisnik.body.id,
+            objava_ID: prvaObjava.id
         }
 
         const kriviToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'

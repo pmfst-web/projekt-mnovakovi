@@ -48,7 +48,6 @@ const RegisterForma = ({registracija, postaviRegistracija}) =>{
                 username: un
             }
             await registracijaAkcije.registracija(novi)
-            // ponistiRegistraciju()
             upozorenje.hidden=true
             uspjeh.hidden=false
             uspjeh.innerText='Uspješno ste regitrirani!'
@@ -80,7 +79,7 @@ const RegisterForma = ({registracija, postaviRegistracija}) =>{
                                 <input type="text" value={ime} name="Ime" onChange={promjenaIme} className='form-control'placeholder='Unesite ime'></input>
                             </div>
                             <div>
-                            <label>Prezime</label>
+                                <label>Prezime</label>
                                 <input type="text" value={prezime} name="Prezime" onChange={promjenaPrezime} className='form-control'placeholder='Unesite prezime'></input>
                             </div>
                             <div>
@@ -99,7 +98,7 @@ const RegisterForma = ({registracija, postaviRegistracija}) =>{
                                 <button type='button' className='btn btn-link btn-floating mb-1' onClick={ponistiRegistraciju}>Prijava</button>
                             </div>
                         </form>
-                        </div>
+                    </div>
                 </div>
             </div>
         )
