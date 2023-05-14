@@ -149,3 +149,9 @@ Pocetak | Kraj
 Dodana komponenta za navigacijsku traku (NavTraka), mogućnost odjave korisnika.
 Dovršen prototip aplikacije.
 
+## 14.05.2023.
+Pocetak | Kraj
+------- | ----
+17:00   | xx:xx
+### Kratki opis promjena
+
